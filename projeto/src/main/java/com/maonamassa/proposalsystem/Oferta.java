@@ -25,14 +25,13 @@ public class Oferta
 
     public Oferta() {}
 
-    public Oferta(Profissional profissional, Contratante contratante, String descricao, String valor,
-    		      StatusOfertaDemanda status)
+    public Oferta(Profissional profissional, Contratante contratante, String descricao, String valor)
     {
         this.profissional = profissional;
         this.contratante = contratante;
         this.descricao = descricao;
         this.valor = valor;
-        this.status = status;
+        this.status = StatusOfertaDemanda.AGUARDANDO_ACEITACAO;
     }
 
     public Profissional getProfissional() {return profissional;}
