@@ -1,0 +1,10 @@
+package com.maonamassa.contractsystem;
+
+public enum StatusAssinaturas 
+{
+	AGUARDANDO_ASSINATURAS,
+	ASSINADO_PELO_PROFISSIONAL,
+	ASSINADO_PELO_CONTRATANTE,
+	CONTRATO_FECHADO,
+	CONTRATO_CANCELADO;
+}
