@@ -59,7 +59,7 @@ public class Insercao {
             em.flush();  // Garante que o ID seja gerado antes de ser associado
 
             // cria o contratante (sem setId, pois o ID é gerado pelo banco)
-            Contratante contratante = new Contratante(nome, email, senha, null, null, null, cpfCnpj);
+            Contratante contratante = new Contratante(nome, cpfCnpj, email, senha); 
             em.persist(contratante);
             em.getTransaction().commit();
 
