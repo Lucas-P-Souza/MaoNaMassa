@@ -15,9 +15,6 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-import com.maonamassa.usersystem.Profissional;
-import com.maonamassa.usersystem.Contratante;
-
 public class LoginScreen extends JPanel {
 
     public LoginScreen(MainFrame mainFrame) {

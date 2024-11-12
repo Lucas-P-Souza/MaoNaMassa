@@ -9,7 +9,7 @@ import com.maonamassa.usersystem.Login;
 import com.maonamassa.usersystem.Profissional;
 
 public class Insercao {
-    
+
     private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("admin");
 
     // metodo para criar um novo profissional

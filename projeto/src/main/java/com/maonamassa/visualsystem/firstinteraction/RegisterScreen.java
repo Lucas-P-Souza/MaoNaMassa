@@ -121,8 +121,8 @@ public class RegisterScreen extends JPanel {
         registerButton.addActionListener(e -> {
             
             if (nameField.getText().isEmpty() ||
-            emailField.getText().isEmpty() ||
             cpfCnpjField.getText().isEmpty() ||
+            emailField.getText().isEmpty() ||
             passwordField.getPassword().length == 0){
 
                 JOptionPane.showMessageDialog(this, "Preencha todos os campos", "Erro", JOptionPane.ERROR_MESSAGE);

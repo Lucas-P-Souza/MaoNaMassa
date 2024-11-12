@@ -18,13 +18,6 @@ public class Contratante extends User
         super(nome, email, senha, cpfCnpj);
     }
 
-    public Contratante(String nome, String email, String senha, String telefone, String endereco, 
-    				   String descricao, String cpfCnpj) 
-    {
-        super(nome, email, senha, telefone, endereco, cpfCnpj);
-        this.descricao = descricao;
-    }
-
     public String getDescricao() {return descricao;}
     public void setDescricao(String descricao) {this.descricao = descricao;}
     

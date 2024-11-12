@@ -9,7 +9,7 @@ import javax.persistence.EntityManagerFactory;
 
 public class ProjectService 
 {
-    private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("maonamassa");
+    private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("admin");
 
     // metodo para criar um novo projeto
     public static Projeto criarProjeto(Oferta oferta, Demanda demanda, String nomeProjeto, 

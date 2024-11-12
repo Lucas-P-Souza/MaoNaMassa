@@ -8,7 +8,7 @@ import javax.persistence.EntityManagerFactory;
 
 public class ContractService 
 {
-    private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("maonamassa");
+    private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("admin");
 
     // metodo para criar um novo Contrato
     public static Contrato criarContrato(Projeto projeto) 
