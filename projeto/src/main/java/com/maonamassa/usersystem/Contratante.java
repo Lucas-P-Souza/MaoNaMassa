@@ -14,6 +14,10 @@ public class Contratante extends User
 
     public Contratante() {}
 
+    public Contratante(String nome, String cpfCnpj, String email, String senha){
+        super(nome, email, senha, cpfCnpj);
+    }
+
     public Contratante(String nome, String email, String senha, String telefone, String endereco, 
     				   String descricao, String cpfCnpj) 
     {

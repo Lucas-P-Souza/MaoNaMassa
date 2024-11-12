@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.util.Arrays;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -15,6 +16,8 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+
+import com.maonamassa.banco_de_dados.Insercao;
 
 public class RegisterScreen extends JPanel {
 
@@ -116,12 +119,50 @@ public class RegisterScreen extends JPanel {
 
         JButton registerButton = new JButton("Cadastrar-se");
         registerButton.addActionListener(e -> {
-            // Adicione aqui a lógica de cadastro (exemplo simples)
-            if (nameField.getText().isEmpty() || emailField.getText().isEmpty() || passwordField.getPassword().length == 0) {
+            
+            if (nameField.getText().isEmpty() ||
+            emailField.getText().isEmpty() ||
+            cpfCnpjField.getText().isEmpty() ||
+            passwordField.getPassword().length == 0){
+
                 JOptionPane.showMessageDialog(this, "Preencha todos os campos", "Erro", JOptionPane.ERROR_MESSAGE);
-            } else {
+                return;
+
+            }
+
+            if (!Arrays.equals(passwordField.getPassword(), confirmPasswordField.getPassword())){
+
+                JOptionPane.showMessageDialog(this, "As senhas não coincidem", "Erro", JOptionPane.ERROR_MESSAGE);
+                return;
+
+            }
+
+
+            if (passwordField.getPassword().length < 6) {
+
+                JOptionPane.showMessageDialog(this, "A senha deve ter no mínimo 6 caracteres", "Erro", JOptionPane.ERROR_MESSAGE);
+                return;
+
+            }
+            else {
+
+                String selectedOption = (String) comboBox.getSelectedItem();
+
+                if (selectedOption.equals("Selecione como você deseja se cadastrar")) {
+
+                    JOptionPane.showMessageDialog(this, "Selecione uma opção válida", "Erro", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                else if (selectedOption.equals("Contratante")) {
+
+                    Insercao.cadastrarContratante(nameField.getText(), emailField.getText(), cpfCnpjField.getText(), passwordField.getPassword().toString());
+                } 
+                else {
+                    
+                    Insercao.cadastrarProfissional(nameField.getText(), emailField.getText(), cpfCnpjField.getText(), passwordField.getPassword().toString());
+                }
                 JOptionPane.showMessageDialog(this, "Cadastro realizado com sucesso!");
-                mainFrame.showScreen("FirstScreen"); // Retorna à tela inicial após o cadastro
+                mainFrame.showScreen("FirstScreen");
             }
         });
         buttonPanel.add(registerButton);

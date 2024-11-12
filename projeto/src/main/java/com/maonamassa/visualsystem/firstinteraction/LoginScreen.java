@@ -90,23 +90,23 @@ public class LoginScreen extends JPanel {
                 JOptionPane.showMessageDialog(this, "Preencha todos os campos", "Erro", JOptionPane.ERROR_MESSAGE);
             } else {
                 // Verificação se é Profissional ou Contratante
-                if (LoginService.isProfissional(email, senha)) {
+                /*if (LoginService.isProfissional(email, senha)) {
                     // Se for Profissional
                     Profissional profissional = LoginService.getProfissionalByEmail(email);
                     ProfessionalSession.setProfissionalLogado(profissional); // Setando a sessão do Profissional
                     JOptionPane.showMessageDialog(this, "Login Profissional realizado com sucesso!");
-                    mainFrame.showScreen("UserProfileScreen"); // Navega para a tela do perfil do usuário
+                    mainFrame.showScreen("InsideScreen"); // Navega para a tela do perfil do usuário
 
                 } else if (LoginService.isContratante(email, senha)) {
                     // Se for Contratante
                     Contratante contratante = LoginService.getContratanteByEmail(email);
                     ContractorSession.setContratanteLogado(contratante); // Setando a sessão do Contratante
                     JOptionPane.showMessageDialog(this, "Login Contratante realizado com sucesso!");
-                    mainFrame.showScreen("UserProfileScreen"); // Navega para a tela do perfil do usuário
+                    mainFrame.showScreen("InsideScreen"); // Navega para a tela do perfil do usuário
 
                 } else {
                     JOptionPane.showMessageDialog(this, "Credenciais inválidas", "Erro", JOptionPane.ERROR_MESSAGE);
-                }
+                }*/
             }
         });
         buttonPanel.add(loginButton, buttonGbc);

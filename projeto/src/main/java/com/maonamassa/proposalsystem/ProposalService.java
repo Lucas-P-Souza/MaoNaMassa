@@ -8,7 +8,7 @@ import com.maonamassa.usersystem.Profissional;
 
 public class ProposalService 
 {
-    private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("maonamassa");
+    private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("admin");
 
     // metodo para criar uma nova Demanda
     public static Demanda criarDemanda(Profissional profissional, Contratante contratante, 

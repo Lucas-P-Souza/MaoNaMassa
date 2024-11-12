@@ -23,6 +23,15 @@ public abstract class User
     
     public User() {}
 
+    public User (String nome, String email, String senha, String cpfCnpj) 
+    {
+        this.name = nome;
+        this.email = email;
+        this.password = senha;
+        this.cpfcnpj = cpfCnpj;
+        this.logado = false;
+    }
+
     public User(String nome, String email, String senha, String telefone, String endereco, 
     		    String cpfCnpj) 
     {

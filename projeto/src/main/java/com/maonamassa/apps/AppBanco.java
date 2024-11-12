@@ -2,7 +2,7 @@ package com.maonamassa.apps;
 
 import com.maonamassa.proposalsystem.*;
 import com.maonamassa.projectsystem.Projeto;
-import com.maonamassa.usersystem.UserService;
+import com.maonamassa.banco_de_dados.Insercao;
 import com.maonamassa.usersystem.Contratante;
 import com.maonamassa.usersystem.Profissional;
 import com.maonamassa.contractsystem.Contrato;
@@ -13,20 +13,20 @@ public class AppBanco
 {
     public static void main(String[] args) 
     {
-        Profissional profissional = UserService.cadastrarProfissional(
-                "João Silva", 
-                "joao.silva@email.com", 
-                "senha123", 
-                "123.456.789-00"
+        Profissional profissional = Insercao.cadastrarProfissional(
+                "João Silva",
+                "123.456.789-00",
+                "joao.silva@email.com",
+                "senha123"
         );
         
         System.out.println("Cadastro de Profissional realizado: " + profissional.getName());
 
-        Contratante contratante = UserService.cadastrarContratante(
-                "Maria Oliveira", 
-                "maria.oliveira@email.com", 
-                "senha456", 
-                "987.654.321-00"
+        Contratante contratante = Insercao.cadastrarContratante(
+                "Maria Oliveira",
+                "987.654.321-00",
+                "maria.oliveira@email.com",
+                "senha456"
         );
         
         System.out.println("Cadastro de Contratante realizado: " + contratante.getName());
