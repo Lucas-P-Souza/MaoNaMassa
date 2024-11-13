@@ -12,15 +12,7 @@ public class Profissional extends User
     public Profissional() {}
 
     public Profissional(String nome, String cpfCnpj, String email, String senha){
-        super(nome, email, senha, cpfCnpj);
-    }
-
-    public Profissional(String nome, String email, String senha, String telefone, String endereco, 
-    		            String cpfCnpj, String areaAtuacao, String disponibilidade) 
-    {
-        super(nome, email, senha, telefone, endereco, cpfCnpj);
-        this.areaAtuacao = areaAtuacao;
-        this.disponibilidade = disponibilidade;
+        super(nome, cpfCnpj, email, senha);
     }
 
     public String getAreaAtuacao() {return areaAtuacao;}

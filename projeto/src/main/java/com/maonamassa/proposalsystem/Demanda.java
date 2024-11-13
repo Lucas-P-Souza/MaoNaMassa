@@ -25,13 +25,12 @@ public class Demanda
 
     public Demanda() {}
 
-    public Demanda(Profissional profissional, Contratante contratante, String descricao,
-    		       StatusOfertaDemanda status) 
+    public Demanda(Profissional profissional, Contratante contratante, String descricao) 
     {
         this.profissional = profissional;
         this.contratante = contratante;
         this.descricao = descricao;
-        this.status = status;
+        this.status = StatusOfertaDemanda.AGUARDANDO_ACEITACAO;
     }
 
     public Profissional getProfissional() {return profissional;}

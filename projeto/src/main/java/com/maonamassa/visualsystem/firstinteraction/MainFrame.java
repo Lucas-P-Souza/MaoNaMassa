@@ -13,6 +13,7 @@ public class MainFrame extends JFrame {
     private CardLayout cardLayout;
 
     public MainFrame() {
+
         setTitle("Nome do App");
         setSize(1500, 750);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

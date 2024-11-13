@@ -121,8 +121,8 @@ public class RegisterScreen extends JPanel {
         registerButton.addActionListener(e -> {
             
             if (nameField.getText().isEmpty() ||
-            emailField.getText().isEmpty() ||
             cpfCnpjField.getText().isEmpty() ||
+            emailField.getText().isEmpty() ||
             passwordField.getPassword().length == 0){
 
                 JOptionPane.showMessageDialog(this, "Preencha todos os campos", "Erro", JOptionPane.ERROR_MESSAGE);
@@ -155,11 +155,11 @@ public class RegisterScreen extends JPanel {
                 }
                 else if (selectedOption.equals("Contratante")) {
 
-                    Insercao.cadastrarContratante(nameField.getText(), emailField.getText(), cpfCnpjField.getText(), passwordField.getPassword().toString());
+                    Insercao.cadastrarContratante(nameField.getText(), cpfCnpjField.getText(),  emailField.getText(), passwordField.getPassword().toString());
                 } 
                 else {
                     
-                    Insercao.cadastrarProfissional(nameField.getText(), emailField.getText(), cpfCnpjField.getText(), passwordField.getPassword().toString());
+                    Insercao.cadastrarProfissional(nameField.getText(), cpfCnpjField.getText(), emailField.getText(),passwordField.getPassword().toString());
                 }
                 JOptionPane.showMessageDialog(this, "Cadastro realizado com sucesso!");
                 mainFrame.showScreen("FirstScreen");

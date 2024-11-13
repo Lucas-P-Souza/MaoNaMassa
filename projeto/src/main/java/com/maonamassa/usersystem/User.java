@@ -6,14 +6,11 @@ import javax.persistence.*;
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class User 
 {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String email;
 
     private String name;
     private String cpfcnpj;
-    private String email;
     private String password;
     private String phone;
     private String address;
@@ -23,7 +20,7 @@ public abstract class User
     
     public User() {}
 
-    public User (String nome, String email, String senha, String cpfCnpj) 
+    public User (String nome, String cpfCnpj, String email, String senha) 
     {
         this.name = nome;
         this.email = email;
@@ -31,21 +28,6 @@ public abstract class User
         this.cpfcnpj = cpfCnpj;
         this.logado = false;
     }
-
-    public User(String nome, String email, String senha, String telefone, String endereco, 
-    		    String cpfCnpj) 
-    {
-        this.name = nome;
-        this.email = email;
-        this.password = senha;
-        this.phone = telefone;
-        this.address = endereco;
-        this.cpfcnpj = cpfCnpj;
-        this.logado = false;
-    }
-
-    public Long getId() {return id;}
-    public void setId(Long id) {this.id = id;}
 
     public String getName() {return name;}
     public void setName(String name) {this.name = name;}
@@ -68,4 +50,3 @@ public abstract class User
     public Boolean getLogado() {return logado;}
     public void setLogado(Boolean logado) {this.logado = logado;}
 }
-

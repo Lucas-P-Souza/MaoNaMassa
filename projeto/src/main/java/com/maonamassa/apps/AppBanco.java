@@ -1,13 +1,9 @@
 package com.maonamassa.apps;
 
 import com.maonamassa.proposalsystem.*;
-import com.maonamassa.projectsystem.Projeto;
 import com.maonamassa.banco_de_dados.Insercao;
 import com.maonamassa.usersystem.Contratante;
 import com.maonamassa.usersystem.Profissional;
-import com.maonamassa.contractsystem.Contrato;
-import com.maonamassa.projectsystem.ProjectService;
-import com.maonamassa.contractsystem.ContractService;
 
 public class AppBanco 
 {
@@ -31,7 +27,7 @@ public class AppBanco
         
         System.out.println("Cadastro de Contratante realizado: " + contratante.getName());
 
-        Oferta oferta = ProposalService.criarOferta(
+        Oferta oferta = Insercao.cadastrarOferta(
                 profissional, 
                 contratante, 
                 "Desenvolvimento de um site institucional", 
@@ -40,7 +36,7 @@ public class AppBanco
         
         System.out.println("Oferta criada: " + oferta.getDescricao());
 
-        Demanda demanda = ProposalService.criarDemanda(
+        Demanda demanda = Insercao.cadastrarDemanda(
                 profissional, 
                 contratante, 
                 "Recrutamento de desenvolvedor Java"
@@ -48,13 +44,10 @@ public class AppBanco
         
         System.out.println("Demanda criada: " + demanda.getDescricao());
         
-        ProposalService.aceitarOferta(oferta.getId());
-        System.out.println("Oferta aceita com sucesso!");
+        Insercao.recusarOferta(oferta);
+        Insercao.recusarDemanda(demanda);
 
-        ProposalService.aceitarDemanda(demanda.getId());
-        System.out.println("Demanda aceita com sucesso!");
-
-        Projeto projeto = ProjectService.criarProjeto(
+        /*Projeto projeto = ProjectService.criarProjeto(
                 oferta, 
                 null, 
                 "Desenvolvimento do Site Institucional", 
@@ -79,6 +72,6 @@ public class AppBanco
         System.out.println("Contrato cancelado.");
 
         Contrato contratoBuscado = ContractService.buscarContratoPorId(contrato.getId());
-        System.out.println("Contrato buscado pelo ID: " + contratoBuscado.getId() + " | Status: " + contratoBuscado.getStatusAssinatura());
+        System.out.println("Contrato buscado pelo ID: " + contratoBuscado.getId() + " | Status: " + contratoBuscado.getStatusAssinatura());*/
     }
 }
