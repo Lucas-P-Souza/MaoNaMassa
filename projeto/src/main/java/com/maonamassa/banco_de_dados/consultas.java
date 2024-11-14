@@ -12,7 +12,7 @@ import com.maonamassa.usersystem.Profissional;
 
 public class Consultas {
     
-    private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("admin");
+    private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("lucas");
 
     // consulta se o Login inserido é valido
     public static boolean validarLogin(String email, String senha) 
@@ -21,6 +21,10 @@ public class Consultas {
         try 
         {
             Login login = em.find(Login.class, email);
+
+            System.out.println(login);
+            System.out.println(login.getEmail());
+            System.out.println(login.getSenha());
             
             if (login.getEmail().equals(email)){
                 if (login.getSenha().equals(senha)){

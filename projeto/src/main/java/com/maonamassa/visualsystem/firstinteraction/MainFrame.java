@@ -5,7 +5,6 @@ import java.awt.CardLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
-import com.maonamassa.visualsystem.profileandsearch.FirstScreen;
 import com.maonamassa.visualsystem.profileandsearch.InsideScreen;
 
 public class MainFrame extends JFrame {
@@ -30,7 +29,7 @@ public class MainFrame extends JFrame {
         add(new FirstScreen(this), "FirstScreen");
         add(new RegisterScreen(this), "RegisterScreen");
         add(new LoginScreen(this), "LoginScreen");
-        add(new InsideScreen(this, true), "InsideScreen");  // Tela interna após login
+        add(new InsideScreen(this), "InsideScreen");  // Tela interna após login
 
         // Exibe a primeira tela
         cardLayout.show(getContentPane(), "FirstScreen");

@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 public class Contratante extends User 
 {
     private String descricao;
+    private String buscando;
 
     public Contratante() {}
 
@@ -15,4 +16,9 @@ public class Contratante extends User
 
     public String getDescricao() {return descricao;}
     public void setDescricao(String descricao) {this.descricao = descricao;}
+
+    public String getBuscando() {return buscando;}
+    public void setBuscando(String buscando) {this.buscando = buscando;}
+
+    
 }

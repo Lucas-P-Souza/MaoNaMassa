@@ -16,6 +16,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import com.maonamassa.banco_de_dados.Consultas;
+import com.maonamassa.banco_de_dados.LoginManager;
 import com.maonamassa.usersystem.Contratante;
 import com.maonamassa.usersystem.Profissional;
 import com.maonamassa.usersystem.Sessao;
@@ -23,6 +24,7 @@ import com.maonamassa.usersystem.Sessao;
 public class LoginScreen extends JPanel {
 
     private static Sessao sessao = new Sessao();
+    private LoginManager loginManager = new LoginManager(); // Instanciando o LoginManager
 
     public static Sessao getSessao() {
         return sessao;
@@ -76,7 +78,7 @@ public class LoginScreen extends JPanel {
 
         add(formPanel, BorderLayout.CENTER);
 
-        // Painel para os botões, agora centralizado
+        // Painel para os botões
         JPanel buttonPanel = new JPanel(new GridBagLayout());
         GridBagConstraints buttonGbc = new GridBagConstraints();
         buttonGbc.insets = new Insets(10, 10, 10, 10);
@@ -95,7 +97,8 @@ public class LoginScreen extends JPanel {
 
             String email = emailField.getText();
             String senha = new String(passwordField.getPassword());
-        
+            boolean rememberMe = rememberMeCheckBox.isSelected();
+
             if (email.isEmpty() || senha.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Preencha todos os campos", "Erro", JOptionPane.ERROR_MESSAGE);
             } 
@@ -106,35 +109,51 @@ public class LoginScreen extends JPanel {
                     JOptionPane.showMessageDialog(this, "Usuário ou senha inválidos", "Erro", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-        
-                // Verificar se é profissional ou contratante
+
+                // Salvar preferências se "Lembrar de mim" estiver marcado
+                if (rememberMe) {
+                    loginManager.savePreferences(email, senha, rememberMe);
+                } else {
+                    loginManager.clearPreferences();
+                }
+
+                // Verificar tipo de usuário e fazer o login
                 boolean isProfissional = Consultas.isProfessional(email);
                 if (isProfissional) {
                     Profissional profissional = Consultas.consultarProfissional(email);
-                    if (profissional == null) {
-                        JOptionPane.showMessageDialog(this, "Erro ao carregar dados do profissional", "Erro", JOptionPane.ERROR_MESSAGE);
-                        return;
-                    }
                     sessao.logarProfissional(profissional);
                     sessao.setIsProfissional(true);
                 } 
                 else {
                     Contratante contratante = Consultas.consultarContratante(email);
-                    if (contratante == null) {
-                        JOptionPane.showMessageDialog(this, "Erro ao carregar dados do contratante", "Erro", JOptionPane.ERROR_MESSAGE);
-                        return;
-                    }
                     sessao.logarContratante(contratante);
                     sessao.setIsContratante(true);
                 }
-        
+
+                System.out.println("Sessão do Profissional: " + sessao.getIsProfissional());
+                System.out.println("Sessão do Contratante: " + sessao.getIsContratante());
+
+                System.out.println("Login efetuado com sucesso");
                 // Mudar para a próxima tela
                 mainFrame.showScreen("InsideScreen");
+                System.out.println("Login efetuado com sucesso 2");
             }
         });
         
-        buttonPanel.add(loginButton, buttonGbc);
+        System.out.println("teste antes login button");
 
+        buttonPanel.add(loginButton, buttonGbc);
         add(buttonPanel, BorderLayout.SOUTH); // Adiciona os botões na parte inferior
+
+        // Carregar as preferências salvas (se existirem)
+        String[] savedPrefs = loginManager.loadPreferences();
+        String savedEmail = savedPrefs[0];
+        String savedPassword = savedPrefs[1];
+        boolean rememberMeChecked = Boolean.parseBoolean(savedPrefs[2]);
+
+        emailField.setText(savedEmail);
+        passwordField.setText(savedPassword);
+        rememberMeCheckBox.setSelected(rememberMeChecked);
     }
 }
+

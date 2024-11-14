@@ -6,7 +6,6 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.util.Arrays;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -120,17 +119,21 @@ public class RegisterScreen extends JPanel {
         JButton registerButton = new JButton("Cadastrar-se");
         registerButton.addActionListener(e -> {
             
+            String senha = new String(passwordField.getPassword());
+            String confirmSenha = new String(confirmPasswordField.getPassword());
+
             if (nameField.getText().isEmpty() ||
             cpfCnpjField.getText().isEmpty() ||
             emailField.getText().isEmpty() ||
-            passwordField.getPassword().length == 0){
+            (senha == null) ||
+            (confirmSenha == null)) {
 
                 JOptionPane.showMessageDialog(this, "Preencha todos os campos", "Erro", JOptionPane.ERROR_MESSAGE);
                 return;
 
             }
 
-            if (!Arrays.equals(passwordField.getPassword(), confirmPasswordField.getPassword())){
+            if (!senha.equals(confirmSenha)) {
 
                 JOptionPane.showMessageDialog(this, "As senhas não coincidem", "Erro", JOptionPane.ERROR_MESSAGE);
                 return;
@@ -138,7 +141,7 @@ public class RegisterScreen extends JPanel {
             }
 
 
-            if (passwordField.getPassword().length < 6) {
+            if (senha.length() < 6) {
 
                 JOptionPane.showMessageDialog(this, "A senha deve ter no mínimo 6 caracteres", "Erro", JOptionPane.ERROR_MESSAGE);
                 return;
@@ -155,13 +158,21 @@ public class RegisterScreen extends JPanel {
                 }
                 else if (selectedOption.equals("Contratante")) {
 
-                    Insercao.cadastrarContratante(nameField.getText(), cpfCnpjField.getText(),  emailField.getText(), passwordField.getPassword().toString());
+                    Insercao.cadastrarContratante(nameField.getText(), cpfCnpjField.getText(),  emailField.getText(), senha);
                 } 
                 else {
                     
-                    Insercao.cadastrarProfissional(nameField.getText(), cpfCnpjField.getText(), emailField.getText(),passwordField.getPassword().toString());
+                    Insercao.cadastrarProfissional(nameField.getText(), cpfCnpjField.getText(), emailField.getText(), senha);
                 }
                 JOptionPane.showMessageDialog(this, "Cadastro realizado com sucesso!");
+                
+                nameField.setText("");
+                cpfCnpjField.setText("");
+                emailField.setText("");
+                passwordField.setText("");
+                confirmPasswordField.setText("");
+                comboBox.setSelectedIndex(0);
+
                 mainFrame.showScreen("FirstScreen");
             }
         });

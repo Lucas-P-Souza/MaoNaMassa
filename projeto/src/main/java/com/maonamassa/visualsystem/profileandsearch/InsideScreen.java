@@ -10,17 +10,20 @@ import com.maonamassa.visualsystem.firstinteraction.LoginScreen;
 
 public class InsideScreen extends JPanel {
 
-    Sessao sessao = new Sessao();
+    Sessao sessao = LoginScreen.getSessao();
 
     private static final double DIVIDER_RATIO = 0.70; // Proporção do painel esquerdo
 
-    public InsideScreen(MainFrame mainFrame, boolean isProfessional) {
+    public InsideScreen(MainFrame mainFrame) {
+
+        System.out.println("InsideScreen");
+
         setLayout(null); // Usando layout absoluto
 
-        // Painel de busca
-        Sessao sessao = LoginScreen.getSessao();
+        boolean isProfessional = sessao.getIsProfissional();
+
         SearchPanel searchPanel = new SearchPanel(isProfessional);
-        UserInfoPanel userInfoPanel = new UserInfoPanel(mainFrame, isProfessional, sessao);
+        UserInfoPanel userInfoPanel = new UserInfoPanel(mainFrame, sessao);
 
         // Definindo tamanhos iniciais
         int mainFrameWidth = mainFrame.getWidth();
@@ -51,13 +54,13 @@ public class InsideScreen extends JPanel {
                 userInfoPanel.setBounds(newLeftPanelWidth, 0, newRightPanelWidth, newHeight);
             }
         });
+
+        setVisible(true);
     }
 
-    //main para teste visual
+    //main para teste visual somente da tela InsideScreen
     public static void main(String[] args) {
-        MainFrame frame = new MainFrame();
-        frame.setSize(800, 600);
-        frame.add(new InsideScreen(frame, true));
-        frame.setVisible(true);
+        MainFrame mainFrame = new MainFrame();
+        mainFrame.showScreen("InsideScreen");
     }
 }

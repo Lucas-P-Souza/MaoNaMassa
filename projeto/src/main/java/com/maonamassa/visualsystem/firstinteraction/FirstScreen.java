@@ -1,4 +1,4 @@
-package com.maonamassa.visualsystem.profileandsearch;
+package com.maonamassa.visualsystem.firstinteraction;
 
 import java.awt.Dimension;
 import java.awt.Font;
@@ -9,8 +9,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-
-import com.maonamassa.visualsystem.firstinteraction.MainFrame;
 
 public class FirstScreen extends JPanel {
 

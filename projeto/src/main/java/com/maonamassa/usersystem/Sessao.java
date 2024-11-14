@@ -43,7 +43,7 @@ public class Sessao {
     private static Profissional profissionalLogado;
     private static String profissao;
     private static String areaAtuacao;
-    private static String disponibilidade;
+    private static Disponibilidade disponibilidade;
 
     public String getProfissao() {return profissao;}
     public void setProfissao(String profissao) {Sessao.profissao = profissao;}
@@ -51,8 +51,8 @@ public class Sessao {
     public String getAreaAtuacao() {return areaAtuacao;}
     public void setAreaAtuacao(String areaAtuacao) {Sessao.areaAtuacao = areaAtuacao;}
 
-    public String getDisponibilidade() {return disponibilidade;}
-    public void setDisponibilidade(String disponibilidade) {Sessao.disponibilidade = disponibilidade;}
+    public Disponibilidade getDisponibilidade() {return disponibilidade;}
+    public void setDisponibilidade(Disponibilidade disponibilidade) {Sessao.disponibilidade = disponibilidade;}
 
 
     public Profissional getProfissionalLogado() {
@@ -61,6 +61,13 @@ public class Sessao {
 
     public void logarProfissional(Profissional profissionalLogado) {
         Sessao.profissionalLogado = profissionalLogado;
+        nome = profissionalLogado.getName();
+        cpfCnpj = profissionalLogado.getCpfcnpj();
+        email = profissionalLogado.getEmail();
+        telefone = profissionalLogado.getPhone();
+        endereco = profissionalLogado.getAddress();
+        profissao = profissionalLogado.getProfissao();
+        areaAtuacao = profissionalLogado.getAreaAtuacao();
         isProfissional = true;
         isContratante = false;
     }
@@ -89,6 +96,13 @@ public class Sessao {
 
     public void logarContratante(Contratante contratanteLogado) {
         Sessao.contratanteLogado = contratanteLogado;
+        nome = contratanteLogado.getName();
+        cpfCnpj = contratanteLogado.getCpfcnpj();
+        email = contratanteLogado.getEmail();
+        telefone = contratanteLogado.getPhone();
+        endereco = contratanteLogado.getAddress();
+        descricao = contratanteLogado.getDescricao();
+        buscando = contratanteLogado.getBuscando();
         isProfissional = false;
         isContratante = true;
     }

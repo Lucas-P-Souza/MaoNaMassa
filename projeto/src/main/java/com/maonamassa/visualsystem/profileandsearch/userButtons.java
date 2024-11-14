@@ -4,12 +4,12 @@ import javax.swing.*;
 
 import com.maonamassa.visualsystem.firstinteraction.MainFrame;
 
-public class userButtons extends JPanel {
+public class UserButtons extends JPanel {
 
     // As propostas abrangem tanto ofertas recebidas quanto feitas, independentemente de ser profissional ou contratante
     // Responsável por criar os botões de ver propostas e ver projetos
 
-    public userButtons(MainFrame mainFrame) {
+    public UserButtons(MainFrame mainFrame) {
         setLayout(null);
 
         JButton proposalsButton = new JButton("Ver Propostas");
@@ -28,7 +28,7 @@ public class userButtons extends JPanel {
         JFrame frame = new JFrame("User Buttons");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(500, 500);
-        frame.add(new userButtons(null));
+        frame.add(new UserButtons(null));
         frame.setVisible(true);
     }
 }
