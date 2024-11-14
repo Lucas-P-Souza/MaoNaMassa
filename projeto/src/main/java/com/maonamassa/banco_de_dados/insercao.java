@@ -15,49 +15,6 @@ public class Insercao {
 
     private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("lucas");
 
-    // Método para atualizar dados do usuário (Profissional ou Contratante)
-    public static void atualizarDados(Sessao sessao, boolean isProfessional) {
-        EntityManager em = emf.createEntityManager();
-
-        try {
-            em.getTransaction().begin();
-
-            if (isProfessional) {
-                // Atualiza os campos específicos de um profissional
-                Profissional profissional = em.find(Profissional.class, sessao.getProfissionalLogado().getEmail());
-                profissional.setName(sessao.getNome());
-                profissional.setCpfcnpj(sessao.getCpfCnpj());
-                profissional.setEmail(sessao.getEmail());
-                profissional.setPhone(sessao.getTelefone());
-                profissional.setAddress(sessao.getEndereco());
-                profissional.setProfissao(sessao.getProfissao());
-                profissional.setAreaAtuacao(sessao.getAreaAtuacao());
-                profissional.setDisponibilidade(sessao.getDisponibilidade());
-                em.merge(profissional);
-            } else {
-                // Atualiza os campos específicos de um contratante
-                Contratante contratante = em.find(Contratante.class, sessao.getContratanteLogado().getEmail());
-                contratante.setName(sessao.getNome());
-                contratante.setCpfcnpj(sessao.getCpfCnpj());
-                contratante.setEmail(sessao.getEmail());
-                contratante.setPhone(sessao.getTelefone());
-                contratante.setAddress(sessao.getEndereco());
-                contratante.setDescricao(sessao.getDescricao());
-                contratante.setBuscando(sessao.getBuscando());
-                em.merge(contratante);
-            }
-
-            em.getTransaction().commit();
-        } catch (Exception e) {
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
-            }
-            throw e;
-        } finally {
-            em.close();
-        }
-    }
-
     // metodo para criar um novo profissional
     public static Profissional cadastrarProfissional(String nome,  String cpfCnpj, String email, String senha) {
 
@@ -249,6 +206,48 @@ public class Insercao {
             em.getTransaction().begin();
             oferta.recusarOferta();
             em.merge(oferta);
+            em.getTransaction().commit();
+        } 
+        catch (Exception e) 
+        {
+            em.getTransaction().rollback();
+            throw e;
+        } 
+        finally 
+        {
+            em.close();
+        }
+    }
+
+    // metodo para atualizar as informacoes de um contratante
+    public static void atualizarContratante(Contratante contratante) {
+        EntityManager em = emf.createEntityManager();
+
+        try 
+        {
+            em.getTransaction().begin();
+            em.merge(contratante);
+            em.getTransaction().commit();
+        } 
+        catch (Exception e) 
+        {
+            em.getTransaction().rollback();
+            throw e;
+        } 
+        finally 
+        {
+            em.close();
+        }
+    }
+
+    // metodo para atualizar as informacoes de um profissional
+    public static void atualizarProfissional(Profissional profissional) {
+        EntityManager em = emf.createEntityManager();
+
+        try 
+        {
+            em.getTransaction().begin();
+            em.merge(profissional);
             em.getTransaction().commit();
         } 
         catch (Exception e) 

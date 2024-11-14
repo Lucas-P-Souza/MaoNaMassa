@@ -97,7 +97,7 @@ public class LoginScreen extends JPanel {
 
             String email = emailField.getText();
             String senha = new String(passwordField.getPassword());
-            boolean rememberMe = rememberMeCheckBox.isSelected();
+            //boolean rememberMe = rememberMeCheckBox.isSelected();
 
             if (email.isEmpty() || senha.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Preencha todos os campos", "Erro", JOptionPane.ERROR_MESSAGE);
@@ -110,12 +110,14 @@ public class LoginScreen extends JPanel {
                     return;
                 }
 
+                /* 
                 // Salvar preferências se "Lembrar de mim" estiver marcado
                 if (rememberMe) {
                     loginManager.savePreferences(email, senha, rememberMe);
                 } else {
                     loginManager.clearPreferences();
                 }
+                */
 
                 // Verificar tipo de usuário e fazer o login
                 boolean isProfissional = Consultas.isProfessional(email);

@@ -1,19 +1,22 @@
 package com.maonamassa.visualsystem.profileandsearch;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import java.awt.Color;
+import javax.swing.*;
+
+import com.maonamassa.banco_de_dados.Consultas;
+import com.maonamassa.usersystem.Contratante;
+import com.maonamassa.usersystem.Profissional;
+
+import java.awt.*;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.util.List;
 
 public class SearchPanel extends JPanel {
 
     private JTextField searchField;
     private JButton searchButton;
     private JLabel searchLabel;
+    private JPanel resultPanel;  // Painel para exibir os cartões de resultados
 
     public SearchPanel(boolean isProfessional) {
         setLayout(null); // Usando layout absoluto
@@ -51,31 +54,90 @@ public class SearchPanel extends JPanel {
         searchButton.setBounds(700, 20, 120, 30); // Posição e tamanho
         searchButton.addActionListener(e -> executeSearch(isProfessional));
 
+        // Painel de resultados para exibir os "cartões"
+        resultPanel = new JPanel();
+        resultPanel.setLayout(new FlowLayout(FlowLayout.LEFT)); // Layout para os cartões
+        resultPanel.setBounds(20, 70, 800, 400); // Posição e tamanho do painel de resultados
+        resultPanel.setBackground(new Color(240, 240, 240)); // Cor de fundo clara
+
         // Adiciona os componentes ao painel
         add(searchLabel);
         add(searchField);
         add(searchButton);
+        add(resultPanel);
     }
 
-    // Método de busca comentado para integração futura
+    // Método de busca que exibe os resultados como "cartões"
     private void executeSearch(boolean isProfessional) {
         String searchTerm = searchField.getText();
+
+        // Limpa o painel de resultados antes de adicionar novos "cartões"
+        resultPanel.removeAll();
+
+        // Se for um profissional, buscamos os contratantes com base no campo "buscando"
         if (isProfessional) {
-            // Pesquisar na tabela de contratantes
-            // Exemplo de função comentada para integração
-            // DatabaseUtils.searchForJobRequests(searchTerm);
+            List<Contratante> contratantes = Consultas.buscarContratantesPorBuscando(searchTerm);
+            for (Contratante contratante : contratantes) {
+                JPanel cardPanel = criarCartaoContratante(contratante);
+                resultPanel.add(cardPanel);
+            }
         } else {
-            // Pesquisar na tabela de profissionais
-            // Exemplo de função comentada para integração
-            // DatabaseUtils.searchForProfessionals(searchTerm);
+            // Se for um contratante, buscamos os profissionais com base na profissão
+            List<Profissional> profissionais = Consultas.buscarProfissionaisPorProfissao(searchTerm);
+            for (Profissional profissional : profissionais) {
+                JPanel cardPanel = criarCartaoProfissional(profissional);
+                resultPanel.add(cardPanel);
+            }
         }
+
+        // Atualiza a interface com os novos cartões
+        resultPanel.revalidate();
+        resultPanel.repaint();
     }
-    //main para teste visual
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("Search Panel");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(600, 100);
-        frame.add(new SearchPanel(true));
-        frame.setVisible(true);
+
+    // Método para criar o "cartão" do contratante
+    private JPanel criarCartaoContratante(Contratante contratante) {
+        JPanel cardPanel = new JPanel();
+        cardPanel.setLayout(new BoxLayout(cardPanel, BoxLayout.Y_AXIS)); // Layout vertical
+
+        // Definindo o estilo do cartão
+        cardPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK)); // Borda preta
+        cardPanel.setPreferredSize(new Dimension(200, 150)); // Tamanho fixo do cartão
+        cardPanel.setBackground(new Color(240, 240, 240)); // Cor de fundo clara
+
+        // Adicionando informações do contratante ao cartão
+        JLabel nomeLabel = new JLabel("Nome: " + contratante.getName());
+        JLabel descricaoLabel = new JLabel("Descrição: " + contratante.getDescricao());
+        JLabel buscandoLabel = new JLabel("Buscando: " + contratante.getBuscando());
+
+        // Adiciona os labels ao cartão
+        cardPanel.add(nomeLabel);
+        cardPanel.add(descricaoLabel);
+        cardPanel.add(buscandoLabel);
+
+        return cardPanel;
+    }
+
+    // Método para criar o "cartão" do profissional
+    private JPanel criarCartaoProfissional(Profissional profissional) {
+        JPanel cardPanel = new JPanel();
+        cardPanel.setLayout(new BoxLayout(cardPanel, BoxLayout.Y_AXIS)); // Layout vertical
+
+        // Definindo o estilo do cartão
+        cardPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK)); // Borda preta
+        cardPanel.setPreferredSize(new Dimension(200, 150)); // Tamanho fixo do cartão
+        cardPanel.setBackground(new Color(240, 240, 240)); // Cor de fundo clara
+
+        // Adicionando informações do profissional ao cartão
+        JLabel nomeLabel = new JLabel("Nome: " + profissional.getName());
+        JLabel profissaoLabel = new JLabel("Profissão: " + profissional.getProfissao());
+        JLabel disponibilidadeLabel = new JLabel("Disponibilidade: " + profissional.getDisponibilidade());
+
+        // Adiciona os labels ao cartão
+        cardPanel.add(nomeLabel);
+        cardPanel.add(profissaoLabel);
+        cardPanel.add(disponibilidadeLabel);
+
+        return cardPanel;
     }
 }

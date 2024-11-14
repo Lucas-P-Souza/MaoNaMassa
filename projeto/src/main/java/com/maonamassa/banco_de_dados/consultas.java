@@ -1,5 +1,7 @@
 package com.maonamassa.banco_de_dados;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -142,6 +144,36 @@ public class Consultas {
         try 
         {
             return em.find(Oferta.class, ofertaId);
+        } 
+        finally 
+        {
+            em.close();
+        }
+    }
+
+    // consulta profissionais que atendem a profissao digitada
+    public static List<Profissional> buscarProfissionaisPorProfissao(String profissao) 
+    {
+        EntityManager em = emf.createEntityManager();
+        try 
+        {
+            return em.createQuery("SELECT p FROM Profissional p WHERE p.profissao = :profissao", Profissional.class)
+                    .setParameter("profissao", profissao).getResultList();
+        } 
+        finally 
+        {
+            em.close();
+        }
+    }
+
+    // consulta contratantes que atendem o "buscando" digitado
+    public static List<Contratante> buscarContratantesPorBuscando(String buscando) 
+    {
+        EntityManager em = emf.createEntityManager();
+        try 
+        {
+            return em.createQuery("SELECT c FROM Contratante c WHERE c.buscando = :buscando", Contratante.class)
+                    .setParameter("buscando", buscando).getResultList();
         } 
         finally 
         {

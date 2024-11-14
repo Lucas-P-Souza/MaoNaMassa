@@ -8,15 +8,20 @@ import com.maonamassa.usersystem.Sessao;
 import com.maonamassa.visualsystem.firstinteraction.MainFrame;
 import com.maonamassa.visualsystem.firstinteraction.LoginScreen;
 
-public class InsideScreen extends JPanel {
-
-    Sessao sessao = LoginScreen.getSessao();
+public class InsideScreen extends JPanel {  
 
     private static final double DIVIDER_RATIO = 0.70; // Proporção do painel esquerdo
 
     public InsideScreen(MainFrame mainFrame) {
 
-        System.out.println("InsideScreen");
+        Sessao sessao = LoginScreen.getSessao();  
+
+        if (sessao == null) {
+            System.out.println("Erro: Sessão está nula!");
+            return;
+        }
+
+        System.out.println("InsideScreen: Sessão válida, nome do usuário: " + sessao.getNome());
 
         setLayout(null); // Usando layout absoluto
 
@@ -61,6 +66,6 @@ public class InsideScreen extends JPanel {
     //main para teste visual somente da tela InsideScreen
     public static void main(String[] args) {
         MainFrame mainFrame = new MainFrame();
-        mainFrame.showScreen("InsideScreen");
+        mainFrame.showScreen("RegisterScreen");
     }
 }

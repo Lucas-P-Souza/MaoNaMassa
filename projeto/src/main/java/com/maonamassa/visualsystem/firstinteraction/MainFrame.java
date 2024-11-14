@@ -29,7 +29,7 @@ public class MainFrame extends JFrame {
         add(new FirstScreen(this), "FirstScreen");
         add(new RegisterScreen(this), "RegisterScreen");
         add(new LoginScreen(this), "LoginScreen");
-        add(new InsideScreen(this), "InsideScreen");  // Tela interna após login
+        add(new InsideScreen(this), "InsideScreen");
 
         // Exibe a primeira tela
         cardLayout.show(getContentPane(), "FirstScreen");
@@ -44,8 +44,32 @@ public class MainFrame extends JFrame {
 
     // Método para trocar telas
     public void showScreen(String screenName) {
-        cardLayout.show(getContentPane(), screenName);
+        System.out.println("Chamando showScreen para: " + screenName);
+        getContentPane().removeAll();
+    
+        switch (screenName) {
+            case "LoginScreen":
+                System.out.println("Exibindo LoginScreen");
+                add(new LoginScreen(this));
+                break;
+            case "RegisterScreen":
+                System.out.println("Exibindo RegisterScreen");
+                add(new RegisterScreen(this));
+                break;
+            case "InsideScreen":
+                System.out.println("Exibindo InsideScreen");
+                add(new InsideScreen(this));
+                break;
+            default:
+                System.out.println("Tela desconhecida. Exibindo LoginScreen por padrão.");
+                add(new LoginScreen(this));
+                break;
+        }
+    
+        revalidate();
+        repaint();
     }
+    
 
     // Alterna entre modo janela e tela cheia
     private void toggleFullScreen() {
