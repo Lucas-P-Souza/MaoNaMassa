@@ -9,7 +9,6 @@ import com.maonamassa.proposalsystem.Oferta;
 import com.maonamassa.usersystem.Contratante;
 import com.maonamassa.usersystem.Login;
 import com.maonamassa.usersystem.Profissional;
-import com.maonamassa.usersystem.Sessao;
 
 public class Insercao {
 

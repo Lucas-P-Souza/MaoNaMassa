@@ -5,7 +5,7 @@ import java.awt.CardLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
-import com.maonamassa.visualsystem.profileandsearch.InsideScreen;
+import com.maonamassa.visualsystem.insideframes.InsideScreen;
 
 public class MainFrame extends JFrame {
     
@@ -59,6 +59,10 @@ public class MainFrame extends JFrame {
             case "InsideScreen":
                 System.out.println("Exibindo InsideScreen");
                 add(new InsideScreen(this));
+                break;
+            case "FirstScreen":
+                System.out.println("Exibindo FirstScreen");
+                add(new FirstScreen(this));
                 break;
             default:
                 System.out.println("Tela desconhecida. Exibindo LoginScreen por padrão.");

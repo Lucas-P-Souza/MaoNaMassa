@@ -1,4 +1,4 @@
-package com.maonamassa.visualsystem.profileandsearch;
+package com.maonamassa.visualsystem.insideframes;
 
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
@@ -6,6 +6,8 @@ import javax.swing.JPanel;
 
 import com.maonamassa.usersystem.Sessao;
 import com.maonamassa.visualsystem.firstinteraction.MainFrame;
+import com.maonamassa.visualsystem.insideframes.searchside.SearchPanel;
+import com.maonamassa.visualsystem.insideframes.userside.UserInfoPanel;
 import com.maonamassa.visualsystem.firstinteraction.LoginScreen;
 
 public class InsideScreen extends JPanel {  
@@ -30,17 +32,10 @@ public class InsideScreen extends JPanel {
         SearchPanel searchPanel = new SearchPanel(isProfessional);
         UserInfoPanel userInfoPanel = new UserInfoPanel(mainFrame, sessao);
 
-        // Definindo tamanhos iniciais
-        int mainFrameWidth = mainFrame.getWidth();
-        int mainFrameHeight = mainFrame.getHeight();
+        // Inicializa os tamanhos
+        adjustPanelSizes(mainFrame, searchPanel, userInfoPanel);
 
-        int leftPanelWidth = (int) (mainFrameWidth * DIVIDER_RATIO);
-        int rightPanelWidth = mainFrameWidth - leftPanelWidth;
-
-        // Configurando posições e tamanhos iniciais
-        searchPanel.setBounds(0, 0, leftPanelWidth, mainFrameHeight);
-        userInfoPanel.setBounds(leftPanelWidth, 0, rightPanelWidth, mainFrameHeight);
-
+        // Adiciona os painéis
         add(searchPanel);
         add(userInfoPanel);
 
@@ -48,24 +43,28 @@ public class InsideScreen extends JPanel {
         mainFrame.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
-                int newWidth = mainFrame.getWidth();
-                int newHeight = mainFrame.getHeight();
-
-                int newLeftPanelWidth = (int) (newWidth * DIVIDER_RATIO);
-                int newRightPanelWidth = newWidth - newLeftPanelWidth;
-
-                // Atualiza as posições e tamanhos dos painéis
-                searchPanel.setBounds(0, 0, newLeftPanelWidth, newHeight);
-                userInfoPanel.setBounds(newLeftPanelWidth, 0, newRightPanelWidth, newHeight);
+                adjustPanelSizes(mainFrame, searchPanel, userInfoPanel);
             }
         });
 
         setVisible(true);
     }
 
-    //main para teste visual somente da tela InsideScreen
+    private void adjustPanelSizes(MainFrame mainFrame, JPanel searchPanel, JPanel userInfoPanel) {
+        int frameWidth = mainFrame.getWidth();
+        int frameHeight = mainFrame.getHeight();
+
+        int leftPanelWidth = (int) (frameWidth * DIVIDER_RATIO);
+        int rightPanelWidth = frameWidth - leftPanelWidth;
+
+        // Atualiza tamanhos e posições
+        searchPanel.setBounds(0, 0, leftPanelWidth, frameHeight);
+        userInfoPanel.setBounds(leftPanelWidth, 0, rightPanelWidth, frameHeight);
+    }
+
+    // main para teste visual somente da tela InsideScreen
     public static void main(String[] args) {
         MainFrame mainFrame = new MainFrame();
-        mainFrame.showScreen("RegisterScreen");
+        mainFrame.showScreen("InsideScreen");
     }
 }

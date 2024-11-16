@@ -1,4 +1,4 @@
-package com.maonamassa.visualsystem.profileandsearch;
+package com.maonamassa.visualsystem.insideframes.userside;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,6 +14,7 @@ public class ImageCirclePanel extends JPanel {
     private BufferedImage image;
 
     public ImageCirclePanel() {
+        
         setPreferredSize(new Dimension(200, 200)); // Tamanho do círculo
 
         // Listener de clique para abrir o upload de imagem
