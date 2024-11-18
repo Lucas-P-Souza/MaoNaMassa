@@ -106,7 +106,7 @@ public class UserInfoPanel extends JPanel {
         add(jLabel);
 
         JComboBox<Disponibilidade> comboBox = new JComboBox<>(options);
-        comboBox.setBounds(180, yPos, FIELD_WIDTH * 10, 30);
+        comboBox.setBounds(270, yPos, FIELD_WIDTH * 10, 30);
         comboBox.setSelectedItem(sessao.getDisponibilidade());
         add(comboBox);
 

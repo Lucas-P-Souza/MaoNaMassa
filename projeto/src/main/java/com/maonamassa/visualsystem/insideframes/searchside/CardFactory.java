@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import com.maonamassa.usersystem.Contratante;
 import com.maonamassa.usersystem.Profissional;
+import com.maonamassa.visualsystem.insideframes.searchside.newdialogs.PedirMaozinhaProfissional;
 
 public class CardFactory {
 
@@ -15,8 +16,8 @@ public class CardFactory {
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 // Desenha um círculo (foto do usuário) na posição (10, 10) com diâmetro 50
-                g.setColor(Color.GRAY);  // Cor para a simulação da foto
-                g.fillOval(10, 10, 50, 50);  // Desenha o círculo
+                g.setColor(Color.GRAY); // Cor para a simulação da foto
+                g.fillOval(10, 10, 50, 50); // Desenha o círculo
             }
         };
         cardPanel.setLayout(null); // Layout absoluto para o cartão
@@ -27,7 +28,8 @@ public class CardFactory {
         cardPanel.setPreferredSize(new Dimension(larguraPainel, 150)); // Largura definida pelo parâmetro
 
         // Adicionando informações do contratante ao cartão
-        JLabel nomeLabel = new JLabel("Nome: " + contratante.getName());
+        JLabel nomeLabel = new JLabel(contratante.getName());
+        nomeLabel.setFont(new Font("Arial", Font.BOLD, 16)); // Fonte em negrito
         nomeLabel.setBounds(70, 10, larguraPainel - 120, 30); // Posição e tamanho (ajustado para a foto)
 
         JLabel descricaoLabel = new JLabel("Descrição: " + contratante.getDescricao());
@@ -36,12 +38,13 @@ public class CardFactory {
         JLabel buscandoLabel = new JLabel("Buscando: " + contratante.getBuscando());
         buscandoLabel.setBounds(70, 70, larguraPainel - 120, 30); // Posição e tamanho (ajustado para a foto)
 
-        // Adicionando o botão "Pedir uma mãozinha" na ponta direita
-        JButton pedirMaozinhaButton = new JButton("Pedir uma Mãozinha");
-        pedirMaozinhaButton.setBounds(larguraPainel - 250, 40, 210, 30); // Posição e tamanho
+        String texto = "Oferecer uma Mãozinha para " + contratante.getName();
+        int larguraTexto = texto.length() * 10; // Aproximação da largura do texto em pixels
+        JButton pedirMaozinhaButton = new JButton("Pedir uma Mãozinha para " + contratante.getName());
+        pedirMaozinhaButton.setBounds(larguraPainel - 30 - larguraTexto, 40, larguraTexto, 30); // Posição e tamanho
 
         // Carrega a imagem de ícone para o botão
-        ImageIcon icon = new ImageIcon(CardFactory.class.getClassLoader().getResource("images/maozinha.png"));  // Caminho correto
+        ImageIcon icon = new ImageIcon(CardFactory.class.getClassLoader().getResource("images/maozinha.png")); // Caminho                                                                                                    // correto
 
         if (icon.getIconWidth() == -1) {
             System.out.println("Erro ao carregar a imagem.");
@@ -54,7 +57,7 @@ public class CardFactory {
         Image resizedImg = img.getScaledInstance(45, 40, java.awt.Image.SCALE_SMOOTH); // Redimensiona a imagem
         icon = new ImageIcon(resizedImg); // Cria um novo ImageIcon com a imagem redimensionada
 
-        pedirMaozinhaButton.setIcon(icon);  // Define o ícone do botão
+        pedirMaozinhaButton.setIcon(icon); // Define o ícone do botão
 
         pedirMaozinhaButton.addActionListener(e -> {
             // Aqui você pode adicionar a lógica do que acontece ao clicar no botão
@@ -78,8 +81,8 @@ public class CardFactory {
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 // Desenha um círculo (foto do usuário) na posição (10, 10) com diâmetro 50
-                g.setColor(Color.GRAY);  // Cor para a simulação da foto
-                g.fillOval(10, 10, 50, 50);  // Desenha o círculo
+                g.setColor(Color.GRAY); // Cor para a simulação da foto
+                g.fillOval(10, 10, 50, 50); // Desenha o círculo
             }
         };
         cardPanel.setLayout(null); // Layout absoluto para o cartão
@@ -97,29 +100,40 @@ public class CardFactory {
         JLabel profissaoLabel = new JLabel("Profissão: " + profissional.getProfissao());
         profissaoLabel.setBounds(70, 40, larguraPainel - 120, 30); // Posição e tamanho (ajustado para a foto)
 
-        JLabel enderecoLabel = new JLabel("Cidade: " + profissional.getAddress());
+        JLabel enderecoLabel = new JLabel("Cidade: " +
+                (profissional != null && profissional.getAddress() != null && !profissional.getAddress().isEmpty()
+                        ? profissional.getAddress()
+                        : "Não informado"));
         enderecoLabel.setBounds(70, 70, larguraPainel - 120, 30); // Posição e tamanho (ajustado para a foto)
 
-        JLabel disponibilidadeLabel = new JLabel("Disponibilidade: " + profissional.getDisponibilidade());
-        disponibilidadeLabel.setBounds(70, 100, larguraPainel - 120, 30); // Posição e tamanho (ajustado para a foto)
+        JLabel disponibilidadeLabel = new JLabel();
+        if (profissional.getDisponibilidade() != null && profissional.getDisponibilidade().getDescricao() != null) {
+            disponibilidadeLabel.setText("Disponibilidade: " + profissional.getDisponibilidade().getDescricao());
+        } else {
+            disponibilidadeLabel.setText("Disponibilidade: Não informado");
+        }
+        disponibilidadeLabel.setBounds(70, 100, larguraPainel - 120, 30); // Posição e tamanho (ajustado para a foto
 
-        // Adicionando o botão "Pedir uma mãozinha" na ponta direita
-        JButton pedirMaozinhaButton = new JButton("Pedir uma Mãozinha");
-        pedirMaozinhaButton.setBounds(larguraPainel - 250, 40, 210, 50); // Posição e tamanho
+        String texto = "Pedir uma Mãozinha para " + profissional.getName();
+        int larguraTexto = texto.length() * 10; // Aproximação da largura do texto em pixels
+        JButton pedirMaozinhaButton = new JButton("Pedir uma Mãozinha para " + profissional.getName());
+        pedirMaozinhaButton.setBounds(larguraPainel - 30 - larguraTexto, 40, larguraTexto, 30);
 
         // Carrega a imagem de ícone para o botão
-        ImageIcon icon = new ImageIcon(CardFactory.class.getClassLoader().getResource("images/maozinha.png"));  // Caminho correto
+        ImageIcon icon = new ImageIcon(CardFactory.class.getClassLoader().getResource("images/maozinha.png")); // Caminho
+                                                                                                               // correto
 
         // Redimensiona a imagem para ajustar ao tamanho do botão
         Image img = icon.getImage(); // Obtém a imagem
         Image resizedImg = img.getScaledInstance(45, 40, java.awt.Image.SCALE_SMOOTH); // Redimensiona a imagem
         icon = new ImageIcon(resizedImg); // Cria um novo ImageIcon com a imagem redimensionada
 
-        pedirMaozinhaButton.setIcon(icon);  // Define o ícone do botão
+        pedirMaozinhaButton.setIcon(icon); // Define o ícone do botão
 
         pedirMaozinhaButton.addActionListener(e -> {
-            // Aqui você pode adicionar a lógica do que acontece ao clicar no botão
             System.out.println("Pedir uma mãozinha para " + profissional.getName());
+            PedirMaozinhaProfissional pedirMaozinhaDialog = new PedirMaozinhaProfissional(profissional);
+            pedirMaozinhaDialog.setVisible(true);
         });
 
         // Adiciona os componentes ao painel

@@ -2,8 +2,8 @@ package com.maonamassa.visualsystem.insideframes.userside;
 
 import javax.swing.*;
 import com.maonamassa.visualsystem.firstinteraction.MainFrame;
-import com.maonamassa.visualsystem.insideframes.userside.newwindows.JanelaProjetos;
-import com.maonamassa.visualsystem.insideframes.userside.newwindows.JanelaPropostas;
+import com.maonamassa.visualsystem.insideframes.userside.newdialogs.JanelaPropostas;
+import com.maonamassa.visualsystem.insideframes.userside.newdialogs.JanelaProjetos;
 
 public class UserButtons extends JPanel {
 
@@ -25,7 +25,13 @@ public class UserButtons extends JPanel {
         // Botão "Logout"
         JButton logoutButton = new JButton("Logout");
         logoutButton.setBounds(75, 80, 180, 30); // Define posição e tamanho
-        logoutButton.addActionListener(e -> mainFrame.showScreen("LoginScreen"));
+        logoutButton.addActionListener(e -> {
+            if (mainFrame != null) {
+                mainFrame.showScreen("LoginScreen");
+            } else {
+                System.out.println("MainFrame não está disponível. Apenas um teste.");
+            }
+        });
         add(logoutButton);
     }
 
