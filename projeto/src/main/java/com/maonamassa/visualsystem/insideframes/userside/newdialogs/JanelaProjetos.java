@@ -12,7 +12,7 @@ public class JanelaProjetos extends JDialog {
     public JanelaProjetos() {
         // Configuração inicial da janela
         setTitle("Meus Projetos");
-        setSize(500, 400); // Define o tamanho da janela
+        setSize(500, 580); // Define o tamanho da janela
         setLocationRelativeTo(null); // Centraliza a janela na tela
         setModal(true); // Bloqueia a interação com a janela principal enquanto esta estiver aberta
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE); // Fecha a janela ao clicar no botão fechar
@@ -33,7 +33,7 @@ public class JanelaProjetos extends JDialog {
 
         // JScrollPane para permitir rolagem
         JScrollPane scrollPane = new JScrollPane(painelProjetos);
-        scrollPane.setBounds(20, 50, 450, 250); // Posição e tamanho do JScrollPane
+        scrollPane.setBounds(20, 50, 450, 400); // Posição e tamanho do JScrollPane
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS); // Sempre mostra a barra de
                                                                                       // rolagem vertical
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER); // Impede a rolagem horizontal
@@ -42,7 +42,7 @@ public class JanelaProjetos extends JDialog {
 
         // Botão de Fechar na parte inferior
         JButton botaoFechar = new JButton("Fechar");
-        botaoFechar.setBounds(200, 320, 100, 30); // Posição e tamanho do botão
+        botaoFechar.setBounds(200, 480, 100, 30); // Posição e tamanho do botão
         botaoFechar.addActionListener(e -> dispose()); // Fecha a janela ao clicar no botão
         add(botaoFechar);
     }
@@ -50,7 +50,7 @@ public class JanelaProjetos extends JDialog {
     // Função para adicionar os cartões de projetos ao painel
     private void adicionarCartoesProjetos(JPanel painelProjetos) {
         System.out.println("Adicionando cartões de projetos...");
-        int alturaCartao = 200;
+        int alturaCartao = 360;
 
         List<Projeto> projetos;
         if (LoginScreen.getSessao().getIsProfissional()) {

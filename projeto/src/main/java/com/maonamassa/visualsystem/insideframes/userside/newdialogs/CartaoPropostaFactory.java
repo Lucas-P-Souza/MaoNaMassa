@@ -1,6 +1,11 @@
 package com.maonamassa.visualsystem.insideframes.userside.newdialogs;
 
 import javax.swing.*;
+
+import com.maonamassa.banco_de_dados.Insercao;
+import com.maonamassa.proposalsystem.Demanda;
+import com.maonamassa.proposalsystem.Oferta;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
@@ -34,7 +39,12 @@ public class CartaoPropostaFactory {
             // Botão de cancelar para a proposta feita
             JButton cancelar = new JButton("Cancelar");
             cancelar.addActionListener((ActionEvent e) -> {
-                // Lógica para cancelar a proposta
+                if (proposta instanceof Oferta) {
+                    Insercao.recusarOferta((Oferta) proposta); // Se for uma oferta, chama recusarOferta
+                }
+                else if (proposta instanceof Demanda) {
+                    Insercao.recusarDemanda((Demanda) proposta); // Se for uma demanda, chama recusarDemanda
+                }
                 JOptionPane.showMessageDialog(cartao, "Proposta cancelada.");
             });
             botoes.add(cancelar);
@@ -44,12 +54,22 @@ public class CartaoPropostaFactory {
             JButton recusar = new JButton("Recusar");
 
             aceitar.addActionListener((ActionEvent e) -> {
-                // Lógica para aceitar a proposta
+                if (proposta instanceof Oferta) {
+                    Insercao.aceitarOferta((Oferta) proposta); // Se for uma oferta, chama aceitarOferta
+                }
+                else if (proposta instanceof Demanda) {
+                    Insercao.aceitarDemanda((Demanda) proposta); // Se for uma demanda, chama aceitarDemanda
+                }
                 JOptionPane.showMessageDialog(cartao, "Proposta aceita.");
             });
 
             recusar.addActionListener((ActionEvent e) -> {
-                // Lógica para recusar a proposta
+                if (proposta instanceof Oferta) {
+                    Insercao.recusarOferta((Oferta) proposta); // Se for uma oferta, chama recusarOferta
+                }
+                else if (proposta instanceof Demanda) {
+                    Insercao.recusarDemanda((Demanda) proposta); // Se for uma demanda, chama recusarDemanda
+                }
                 JOptionPane.showMessageDialog(cartao, "Proposta recusada.");
             });
 
