@@ -64,7 +64,7 @@ public class AppBanco {
                 Profissional pedreiro = new Profissional();
                 pedreiro.setName(names1.get(i));
                 pedreiro.setEmail(names1.get(i) + i + "@email.com");
-                pedreiro.setPassword(names1.get(i) + i);
+                pedreiro.setPassword("senhasenha");
                 pedreiro.setPhone("2199999000" + i);
                 pedreiro.setAddress("Cidade " + i);
                 pedreiro.setProfissao("Pedreiro");
@@ -74,8 +74,8 @@ public class AppBanco {
     
                 Contratante contratantePedreiro = new Contratante();
                 contratantePedreiro.setName(names2.get(i));
-                contratantePedreiro.setEmail(names2.get(i) + i + "@email.com");
-                contratantePedreiro.setPassword(names2.get(i) + i);
+                contratantePedreiro.setEmail(names2.get(i) + i + "@gmail.com");
+                contratantePedreiro.setPassword("senhasenha");
                 contratantePedreiro.setPhone("2199999000" + i);
                 contratantePedreiro.setAddress("Cidade " + i);
                 contratantePedreiro.setBuscando("Pedreiro");
@@ -85,8 +85,8 @@ public class AppBanco {
     
                 Profissional programador = new Profissional();
                 programador.setName(names3.get(i));
-                programador.setEmail(names3.get(i) + i + "@email.com");
-                programador.setPassword(names3.get(i) + i);
+                programador.setEmail(names3.get(i) + i + "hotmail.com");
+                programador.setPassword("senhasenha");
                 programador.setPhone("3199999000" + i);
                 programador.setAddress("Cidade " + i);
                 programador.setProfissao("Programador");
@@ -96,8 +96,8 @@ public class AppBanco {
     
                 Contratante contratanteProgramador = new Contratante();
                 contratanteProgramador.setName(names4.get(i));
-                contratanteProgramador.setEmail(names4.get(i) + i + "@email.com");
-                contratanteProgramador.setPassword(names4.get(i) + i);
+                contratanteProgramador.setEmail(names4.get(i) + i + "@outlook.com");
+                contratanteProgramador.setPassword("senhasenha");
                 contratanteProgramador.setPhone("3199999000" + i);
                 contratanteProgramador.setAddress("Cidade " + i);
                 contratanteProgramador.setBuscando("Programador");
