@@ -4,5 +4,6 @@ public enum StatusDoProjeto
 {
     AGUARDANDO_ACEITACAO,
     PROJETO_ACEITO,
-    PROJETO_REJEITADO;
+    PROJETO_REJEITADO, 
+    CANCELADO;
 }

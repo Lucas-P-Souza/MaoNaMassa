@@ -166,4 +166,8 @@ public class Projeto {
     public void setStatusDoProjeto(StatusDoProjeto statusDoProjeto) {
         this.statusDoProjeto = statusDoProjeto;
     }
+
+    public void cancelarProjeto() {
+        this.statusDoProjeto = StatusDoProjeto.CANCELADO;
+    }
 }

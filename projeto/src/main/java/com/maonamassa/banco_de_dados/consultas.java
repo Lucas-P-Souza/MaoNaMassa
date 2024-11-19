@@ -24,10 +24,6 @@ public class Consultas {
         try {
             Login login = em.find(Login.class, email);
 
-            System.out.println(login);
-            System.out.println(login.getEmail());
-            System.out.println(login.getSenha());
-
             if (login.getEmail().equals(email)) {
                 if (login.getSenha().equals(senha)) {
                     return true;
