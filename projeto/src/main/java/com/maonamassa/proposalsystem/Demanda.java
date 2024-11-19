@@ -47,6 +47,7 @@ public class Demanda
 
     public void aceitarDemanda() {this.status = StatusOfertaDemanda.PROPOSTA_ACEITA;}
     public void recusarDemanda() {this.status = StatusOfertaDemanda.PROPOSTA_REJEITADA;}
+    public void cancelarDemanda() {this.status = StatusOfertaDemanda.PROPOSTA_CANCELADA;}
 
 	public Long getId() {return id;}
-}
+    }

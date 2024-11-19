@@ -51,6 +51,7 @@ public class Oferta
     
     public void aceitarOferta() {this.status = StatusOfertaDemanda.PROPOSTA_ACEITA;}
     public void recusarOferta() {this.status = StatusOfertaDemanda.PROPOSTA_REJEITADA;}
+    public void cancelarOferta() {this.status = StatusOfertaDemanda.PROPOSTA_CANCELADA;};
 
 	public Long getId() {return id;}
-}
+    }

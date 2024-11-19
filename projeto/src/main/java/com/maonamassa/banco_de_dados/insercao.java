@@ -145,12 +145,124 @@ public class Insercao {
         }
     }
 
+    // metodo para aceitar uma oferta
+    public static void aceitarOferta(Oferta oferta) {
+        EntityManager em = emf.createEntityManager();
+
+        try {
+            em.getTransaction().begin();
+            oferta.aceitarOferta();
+            em.merge(oferta);
+            Projeto projeto = new Projeto();
+            projeto.setContratante(oferta.getContratante());
+            projeto.setProfissional(oferta.getProfissional());
+            em.persist(projeto);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            throw e;
+        } finally {
+            em.close();
+        }
+    }
+
+    // metodo para aceitar uma demanda
+    public static void aceitarDemanda(Demanda demanda) {
+        EntityManager em = emf.createEntityManager();
+
+        try {
+            em.getTransaction().begin();
+            demanda.aceitarDemanda();
+            em.merge(demanda);
+            Projeto projeto = new Projeto();
+            projeto.setContratante(demanda.getContratante());
+            projeto.setProfissional(demanda.getProfissional());
+            em.persist(projeto);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            throw e;
+        } finally {
+            em.close();
+        }
+    }
+
+    // metodo para rejeitar uma Oferta
+    public static void recusarOferta(Oferta oferta) {
+        EntityManager em = emf.createEntityManager();
+
+        try {
+            em.getTransaction().begin();
+            oferta.recusarOferta();
+            em.merge(oferta);
+            excluirOferta(oferta);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            throw e;
+        } finally {
+            em.close();
+        }
+    }
+
+    // metodo para rejeitar uma demanda
+    public static void recusarDemanda(Demanda demanda) {
+        EntityManager em = emf.createEntityManager();
+
+        try {
+            em.getTransaction().begin();
+            demanda.recusarDemanda();
+            em.merge(demanda);
+            excluirDemanda(demanda);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            throw e;
+        } finally {
+            em.close();
+        }
+    }
+
+    // metodo para cancelar uma oferta
+    public static void cancelarOferta(Oferta oferta) {
+        EntityManager em = emf.createEntityManager();
+
+        try {
+            em.getTransaction().begin();
+            oferta.cancelarOferta();
+            em.merge(oferta);
+            excluirOferta(oferta);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            throw e;
+        } finally {
+            em.close();
+        }
+    }
+
+    // metodo para cancelar uma demanda
+    public static void cancelarDemanda(Demanda demanda) {
+        EntityManager em = emf.createEntityManager();
+
+        try {
+            em.getTransaction().begin();
+            demanda.cancelarDemanda();
+            em.merge(demanda);
+            excluirDemanda(demanda);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            throw e;
+        } finally {
+            em.close();
+        }
+    }
     // metodo para excluir uma Demanda
     public static void excluirDemanda(Demanda demanda) {
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
-            em.remove(demanda);
             em.remove(demanda);
             em.getTransaction().commit();
         } catch (Exception e) {
@@ -166,7 +278,6 @@ public class Insercao {
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
-            em.remove(oferta);
             em.remove(oferta);
             em.getTransaction().commit();
         } catch (Exception e) {

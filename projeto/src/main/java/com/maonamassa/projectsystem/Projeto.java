@@ -52,6 +52,8 @@ public class Projeto {
     @Enumerated(EnumType.STRING)
     private StatusDoProjeto statusDoProjeto;
 
+    public Projeto() {}
+
     public Projeto(Oferta oferta, String nomeProjeto, String tipoServico, String descricaoProjeto,
             LocalDate dataInicio, LocalDate dataFim, String valorCombinado) {
         this.profissional = oferta.getProfissional();
