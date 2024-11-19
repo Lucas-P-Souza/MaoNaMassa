@@ -128,38 +128,36 @@ public class AppBanco {
 
         for (int i = 0; i < 40; i++) 
         {
-            Oferta oferta = new Oferta(pedreiros.get(i), contratantesPedreiro.get(0), 
-                                       "Oferta de Pedreiro para " + contratantesPedreiro.get(i).getName(), 
-                                       "1000", StatusOfertaDemanda.AGUARDANDO_ACEITACAO
-                                       );
-            em.persist(oferta);
+                Oferta oferta = new Oferta(pedreiros.get(i), contratantesPedreiro.get(0), 
+                                        "Oferta de Pedreiro para " + contratantesPedreiro.get(i).getName(), 
+                                        "1000");
+                oferta.setStatus(StatusOfertaDemanda.AGUARDANDO_ACEITACAO);
+                em.persist(oferta);
         }
 
         for (int i = 0; i < 40; i++) 
         {
-            Oferta oferta = new Oferta(programadores.get(i), contratantesProgramador.get(0), 
-                                       "Oferta de Programador para " + contratantesProgramador.get(i).getName(), 
-                                       "1000", StatusOfertaDemanda.AGUARDANDO_ACEITACAO
-                                       );
-            em.persist(oferta);
+                Oferta oferta = new Oferta(programadores.get(i), contratantesProgramador.get(0), 
+                                        "Oferta de Programador para " + contratantesProgramador.get(i).getName(), 
+                                        "1000");
+                oferta.setStatus(StatusOfertaDemanda.AGUARDANDO_ACEITACAO);
+                em.persist(oferta);
         }
 
         for (int i = 0; i < 40; i++) 
         {
-            Demanda demanda = new Demanda(pedreiros.get(0), contratantesPedreiro.get(1), 
-                                       "Demanda de Pedreiro para " + pedreiros.get(i).getName(),
-                                        StatusOfertaDemanda.AGUARDANDO_ACEITACAO
-                                       );
-            em.persist(demanda);
+                Demanda demanda = new Demanda(pedreiros.get(0), contratantesPedreiro.get(1), 
+                                        "Demanda de Pedreiro para " + pedreiros.get(i).getName());
+                demanda.setStatus(StatusOfertaDemanda.AGUARDANDO_ACEITACAO);
+                em.persist(demanda);
         }
 
         for (int i = 0; i < 40; i++) 
         {
-            Demanda demanda = new Demanda(programadores.get(0), contratantesProgramador.get(i), 
-                                       "Demanda de Programador para " + programadores.get(i).getName(),
-                                        StatusOfertaDemanda.AGUARDANDO_ACEITACAO
-                                       );
-            em.persist(demanda);
+                Demanda demanda = new Demanda(programadores.get(0), contratantesProgramador.get(i), 
+                                        "Demanda de Programador para " + programadores.get(i).getName());
+                demanda.setStatus(StatusOfertaDemanda.AGUARDANDO_ACEITACAO);
+                em.persist(demanda);
         }
 
         em.getTransaction().commit();
