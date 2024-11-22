@@ -1,8 +1,9 @@
 package com.maonamassa.visualsystem.insideframes;
 
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import javax.swing.JPanel;
 
 import com.maonamassa.usersystem.Sessao;
 import com.maonamassa.visualsystem.firstinteraction.MainFrame;
@@ -10,13 +11,13 @@ import com.maonamassa.visualsystem.insideframes.searchside.SearchPanel;
 import com.maonamassa.visualsystem.insideframes.userside.UserInfoPanel;
 import com.maonamassa.visualsystem.firstinteraction.LoginScreen;
 
-public class InsideScreen extends JPanel {  
+public class InsideScreen extends JPanel {
 
     private static final double DIVIDER_RATIO = 0.70; // Proporção do painel esquerdo
+    private JSplitPane splitPane; // Divisor responsivo entre os dois painéis
 
     public InsideScreen(MainFrame mainFrame) {
-
-        Sessao sessao = LoginScreen.getSessao();  
+        Sessao sessao = LoginScreen.getSessao();
 
         if (sessao == null) {
             System.out.println("Erro: Sessão está nula!");
@@ -25,41 +26,40 @@ public class InsideScreen extends JPanel {
 
         System.out.println("InsideScreen: Sessão válida, nome do usuário: " + sessao.getNome());
 
-        setLayout(null); // Usando layout absoluto
+        setLayout(new BorderLayout()); // Layout principal responsivo
 
         boolean isProfessional = sessao.getIsProfissional();
 
+        // Painéis
         SearchPanel searchPanel = new SearchPanel(isProfessional);
         UserInfoPanel userInfoPanel = new UserInfoPanel(mainFrame, sessao);
 
-        // Inicializa os tamanhos
-        adjustPanelSizes(mainFrame, searchPanel, userInfoPanel);
+        // Configuração do JSplitPane
+        splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+        splitPane.setLeftComponent(searchPanel);
+        splitPane.setRightComponent(userInfoPanel);
+        splitPane.setResizeWeight(DIVIDER_RATIO); // Define a proporção inicial
+        splitPane.setDividerSize(8); // Espessura do divisor
+        splitPane.setContinuousLayout(true);
 
-        // Adiciona os painéis
-        add(searchPanel);
-        add(userInfoPanel);
+        // Adiciona o divisor à tela principal
+        add(splitPane, BorderLayout.CENTER);
 
-        // Listener para redimensionamento
+        // Listener para ajustar tamanhos ao redimensionar
         mainFrame.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
-                adjustPanelSizes(mainFrame, searchPanel, userInfoPanel);
+                adjustDividerPosition();
             }
         });
 
         setVisible(true);
     }
 
-    private void adjustPanelSizes(MainFrame mainFrame, JPanel searchPanel, JPanel userInfoPanel) {
-        int frameWidth = mainFrame.getWidth();
-        int frameHeight = mainFrame.getHeight();
-
-        int leftPanelWidth = (int) (frameWidth * DIVIDER_RATIO);
-        int rightPanelWidth = frameWidth - leftPanelWidth;
-
-        // Atualiza tamanhos e posições
-        searchPanel.setBounds(0, 0, leftPanelWidth, frameHeight);
-        userInfoPanel.setBounds(leftPanelWidth, 0, rightPanelWidth, frameHeight);
+    private void adjustDividerPosition() {
+        int frameWidth = getWidth();
+        int dividerPosition = (int) (frameWidth * DIVIDER_RATIO);
+        splitPane.setDividerLocation(dividerPosition); // Recalcula a posição do divisor
     }
 
     // main para teste visual somente da tela InsideScreen

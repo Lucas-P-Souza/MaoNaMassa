@@ -1,6 +1,7 @@
 package com.maonamassa.visualsystem.insideframes.userside;
 
 import javax.swing.*;
+import java.awt.*;
 import com.maonamassa.visualsystem.firstinteraction.MainFrame;
 import com.maonamassa.visualsystem.insideframes.userside.newdialogs.JanelaPropostas;
 import com.maonamassa.visualsystem.insideframes.userside.newdialogs.JanelaProjetos;
@@ -8,23 +9,21 @@ import com.maonamassa.visualsystem.insideframes.userside.newdialogs.JanelaProjet
 public class UserButtons extends JPanel {
 
     public UserButtons(MainFrame mainFrame) {
-        setLayout(null); // Define layout nulo para posicionar os componentes manualmente
+        // Configura o layout do painel como FlowLayout, centralizando os botões
+        setLayout(new FlowLayout(FlowLayout.CENTER, 20, 10)); // Espaço horizontal: 20px, vertical: 10px
 
         // Botão "Ver Propostas"
         JButton proposalsButton = new JButton("Ver Propostas");
-        proposalsButton.setBounds(75, 0, 180, 30); // Define posição e tamanho
         proposalsButton.addActionListener(e -> abrirJanelaPropostas());
-        add(proposalsButton);
+        add(proposalsButton); // Adiciona o botão ao painel
 
         // Botão "Ver Projetos"
         JButton projectsButton = new JButton("Ver Projetos");
-        projectsButton.setBounds(75, 40, 180, 30); // Define posição e tamanho
         projectsButton.addActionListener(e -> abrirJanelaProjetos());
-        add(projectsButton);
+        add(projectsButton); // Adiciona o botão ao painel
 
         // Botão "Logout"
         JButton logoutButton = new JButton("Logout");
-        logoutButton.setBounds(75, 80, 180, 30); // Define posição e tamanho
         logoutButton.addActionListener(e -> {
             if (mainFrame != null) {
                 mainFrame.showScreen("LoginScreen");
@@ -32,7 +31,7 @@ public class UserButtons extends JPanel {
                 System.out.println("MainFrame não está disponível. Apenas um teste.");
             }
         });
-        add(logoutButton);
+        add(logoutButton); // Adiciona o botão ao painel
     }
 
     // Método para abrir a janela de propostas
@@ -51,7 +50,7 @@ public class UserButtons extends JPanel {
     public static void main(String[] args) {
         JFrame frame = new JFrame("User Buttons");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(300, 200); // Tamanho ajustado do frame para caber os botões
+        frame.setSize(400, 150); // Tamanho inicial do frame
         frame.add(new UserButtons(null)); // Adiciona o painel de botões
         frame.setVisible(true);
     }

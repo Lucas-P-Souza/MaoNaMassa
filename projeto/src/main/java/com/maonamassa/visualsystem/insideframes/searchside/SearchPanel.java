@@ -18,16 +18,37 @@ public class SearchPanel extends JPanel {
     private JScrollPane scrollPane; // JScrollPane para adicionar o painel de resultados
 
     public SearchPanel(boolean isProfessional) {
-        setLayout(null); // Usando layout absoluto para o painel principal
+        setLayout(new BorderLayout()); // Layout principal do painel
+
+        // Painel externo com margens
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BorderLayout());
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // Margens externas (topo, esquerda, base,
+                                                                              // direita)
+
+        // Painel superior para os elementos de busca
+        JPanel searchPanel = new JPanel();
+        searchPanel.setLayout(new GridBagLayout()); // Layout flexível para alinhamento
+        searchPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Margem interna do painel superior
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5); // Espaçamento entre os componentes
 
         // Label de busca
         searchLabel = new JLabel("Buscar por:");
-        searchLabel.setBounds(50, 20, 100, 30); // Posição (x, y) e tamanho (largura, altura)
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.WEST;
+        searchPanel.add(searchLabel, gbc);
 
         // Campo de busca
         searchField = new JTextField(" pedreiro, encanador, eletricista...");
         searchField.setForeground(Color.GRAY);
-        searchField.setBounds(140, 20, 1050, 30); // Posição e tamanho
+        searchField.setColumns(30); // Define o tamanho inicial do campo
+        gbc.gridx = 1;
+        gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        searchPanel.add(searchField, gbc);
 
         // Placeholder que some ao clicar
         searchField.addFocusListener(new FocusAdapter() {
@@ -50,7 +71,10 @@ public class SearchPanel extends JPanel {
 
         // Botão de pesquisa
         searchButton = new JButton("Pesquisar");
-        searchButton.setBounds(1230, 20, 120, 30); // Posição e tamanho
+        gbc.gridx = 2;
+        gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        searchPanel.add(searchButton, gbc);
         searchButton.addActionListener(e -> executeSearch(isProfessional));
 
         // Painel de resultados para exibir os "cartões"
@@ -60,17 +84,17 @@ public class SearchPanel extends JPanel {
 
         // JScrollPane para envolver o painel de resultados
         scrollPane = new JScrollPane(resultPanel);
-        scrollPane.setBounds(50, 70, 1300, 900); // Posição e tamanho do JScrollPane
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS); // Barra de rolagem sempre visível
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER); // Desabilita rolagem
-                                              
+                                                                                         // horizontal
         scrollPane.getVerticalScrollBar().setUnitIncrement(16);
 
-        // Adiciona os componentes ao painel
-        add(searchLabel);
-        add(searchField);
-        add(searchButton);
-        add(scrollPane); // Adiciona o JScrollPane em vez do painel diretamente
+        // Adiciona os componentes ao painel principal
+        mainPanel.add(searchPanel, BorderLayout.NORTH); // Painel de busca no topo
+        mainPanel.add(scrollPane, BorderLayout.CENTER); // Resultados no centro
+
+        // Adiciona o painel principal ao painel externo
+        add(mainPanel, BorderLayout.CENTER);
     }
 
     // Método de busca que exibe os resultados como "cartões"
@@ -80,29 +104,21 @@ public class SearchPanel extends JPanel {
         // Limpa o painel de resultados antes de adicionar novos "cartões"
         resultPanel.removeAll();
 
-        // Inicializa o Y para controlar a posição dos cartões
-        int yPosition = 0; // Inicializa a posição vertical para calcular o tamanho do painel
-
         if (isProfessional) {
             List<Contratante> contratantes = Consultas.buscarContratantesPorBuscando(searchTerm);
             for (Contratante contratante : contratantes) {
                 JPanel cardPanel = CardFactory.criarCartaoContratante(contratante, scrollPane.getWidth());
                 resultPanel.add(cardPanel);
-                yPosition += 160; // Altura do cartão + espaçamento
             }
         } else {
             List<Profissional> profissionais = Consultas.buscarProfissionaisPorProfissao(searchTerm);
             for (Profissional profissional : profissionais) {
                 JPanel cardPanel = CardFactory.criarCartaoProfissional(profissional, scrollPane.getWidth());
                 resultPanel.add(cardPanel);
-                yPosition += 160; // Altura do cartão + espaçamento
             }
         }
 
-        // Atualiza o tamanho preferido do painel de resultados
-        resultPanel.setPreferredSize(new Dimension(scrollPane.getWidth() - 20, yPosition));
-
-        // Atualiza a interface com os novos cartões
+        // Atualiza o painel de resultados
         resultPanel.revalidate();
         resultPanel.repaint();
     }

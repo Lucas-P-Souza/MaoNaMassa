@@ -49,7 +49,9 @@ public class CardFactory {
         }
 
         pedirMaozinhaButton.addActionListener(e -> {
-            System.out.println("Pedir uma mãozinha para " + contratante.getName());
+            System.out.println("Abrindo a janela 'Pedir uma mãozinha' para " + contratante.getName());
+            PedirMaozinhaProfissional pedirMaozinhaDialog = new PedirMaozinhaProfissional(contratante);
+            pedirMaozinhaDialog.setVisible(true);
         });
 
         // Adiciona os componentes ao painel
