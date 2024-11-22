@@ -1,6 +1,9 @@
 package com.maonamassa.visualsystem.insideframes.userside.newdialogs;
 
 import javax.swing.*;
+
+import com.maonamassa.banco_de_dados.Insercao;
+import com.maonamassa.contractsystem.Contrato;
 import com.maonamassa.projectsystem.Projeto;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -157,6 +160,11 @@ public class CartaoProjeto extends JPanel {
         btnAtualizarInformacoes.setBounds(200, 270, 180, 30);
         btnAtualizarInformacoes.setVisible(false); // Inicialmente oculto
         btnAtualizarInformacoes.addActionListener((ActionEvent e) -> {
+            // Atualiza as informações do projeto
+            projeto.setNomeProjeto(tfNomeProjeto.getText());
+            projeto.setDescricaoProjeto(taDescricao.getText());
+            projeto.setValorCombinado(tfValor.getText());
+            Insercao.atualizarProjeto(projeto);
             JOptionPane.showMessageDialog(this, "Informações atualizadas com sucesso!");
         });
         add(btnAtualizarInformacoes);
@@ -165,12 +173,21 @@ public class CartaoProjeto extends JPanel {
         btnGerarContrato = new JButton("Iniciar Projeto / Gerar Contrato");
         btnGerarContrato.setBounds(10, 310, 180, 30);
         btnGerarContrato.setVisible(false); // Inicialmente oculto
+        btnGerarContrato.addActionListener((ActionEvent e) -> {
+            Contrato contrato = new Contrato(projeto);
+            Insercao.criarContrato(contrato);
+            JOptionPane.showMessageDialog(this, "Contrato gerado com sucesso!");
+        });
         add(btnGerarContrato);
 
         // Botão Cancelar Projeto
         btnCancelarProjeto = new JButton("Cancelar Projeto");
         btnCancelarProjeto.setBounds(200, 310, 180, 30);
         btnCancelarProjeto.setVisible(false); // Inicialmente oculto
+        btnCancelarProjeto.addActionListener((ActionEvent e) -> {
+            Insercao.cancelarProjeto(projeto);
+            JOptionPane.showMessageDialog(this, "Projeto cancelado com sucesso!");
+        });
         add(btnCancelarProjeto);
     }
 

@@ -66,7 +66,7 @@ public class AppBanco {
                         pedreiro.setPhone("2199999000" + i);
                         pedreiro.setAddress("Cidade " + i);
                         pedreiro.setProfissao("Pedreiro");
-                        pedreiro.setCpfcnpj("22345678" + i);
+                        pedreiro.setCpfcnpj("12345678" + i);
                         em.persist(pedreiro);
                         pedreiros.add(pedreiro);
 
@@ -77,18 +77,18 @@ public class AppBanco {
                         contratantePedreiro.setPhone("2199999000" + i);
                         contratantePedreiro.setAddress("Cidade " + i);
                         contratantePedreiro.setBuscando("Pedreiro");
-                        contratantePedreiro.setCpfcnpj("22345678" + i);
+                        contratantePedreiro.setCpfcnpj("87654321" + i);
                         em.persist(contratantePedreiro);
                         contratantesPedreiro.add(contratantePedreiro);
 
                         Profissional programador = new Profissional();
                         programador.setName(names3.get(i));
-                        programador.setEmail(names3.get(i) + i + "hotmail.com");
+                        programador.setEmail(names3.get(i) + i + "@hotmail.com");
                         programador.setPassword("senhasenha");
                         programador.setPhone("3199999000" + i);
                         programador.setAddress("Cidade " + i);
                         programador.setProfissao("Programador");
-                        programador.setCpfcnpj("32345678" + i);
+                        programador.setCpfcnpj("23456781" + i);
                         em.persist(programador);
                         programadores.add(programador);
 
@@ -99,7 +99,7 @@ public class AppBanco {
                         contratanteProgramador.setPhone("3199999000" + i);
                         contratanteProgramador.setAddress("Cidade " + i);
                         contratanteProgramador.setBuscando("Programador");
-                        contratanteProgramador.setCpfcnpj("32345678" + i);
+                        contratanteProgramador.setCpfcnpj("76543218" + i);
                         em.persist(contratanteProgramador);
                         contratantesProgramador.add(contratanteProgramador);
                 }

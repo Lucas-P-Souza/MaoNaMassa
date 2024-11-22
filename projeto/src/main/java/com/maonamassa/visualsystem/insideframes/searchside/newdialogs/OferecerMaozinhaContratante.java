@@ -3,11 +3,16 @@ package com.maonamassa.visualsystem.insideframes.searchside.newdialogs;
 import java.awt.*;
 import javax.swing.*;
 
+import com.maonamassa.banco_de_dados.Insercao;
 import com.maonamassa.usersystem.Contratante;
+import com.maonamassa.visualsystem.firstinteraction.LoginScreen;
 
 public class OferecerMaozinhaContratante extends JDialog {
 
+    private Contratante contratante;
+
     public OferecerMaozinhaContratante(Contratante contratante) {
+        this.contratante = contratante;
         configurarJanela();
         configurarConteudoContratante(contratante);
     }
@@ -99,6 +104,12 @@ public class OferecerMaozinhaContratante extends JDialog {
 
         // Botão para enviar a proposta
         JButton botaoEnviar = new JButton("Enviar Proposta");
+        botaoEnviar.addActionListener(e -> {
+            Insercao.cadastrarOferta(LoginScreen.getSessao().getProfissionalLogado(), contratante, textAreaProposta.getText(), campoValor.getText());
+            dispose();
+            // mensagem de sucesso
+            JOptionPane.showMessageDialog(null, "Proposta enviada com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+        });
 
         // Painel para o campo de valor e o botão
         JPanel painelValorEEnviar = new JPanel();

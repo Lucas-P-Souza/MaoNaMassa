@@ -152,11 +152,13 @@ public class Insercao {
         try {
             em.getTransaction().begin();
             oferta.aceitarOferta();
-            em.remove(oferta);
             Projeto projeto = new Projeto();
             projeto.setContratante(oferta.getContratante());
             projeto.setProfissional(oferta.getProfissional());
             em.persist(projeto);
+            em.flush(); 
+            // apaga a oferta do banco usando sql
+            em.createNativeQuery("DELETE FROM Oferta WHERE id = " + oferta.getId()).executeUpdate();
             em.getTransaction().commit();
         } catch (Exception e) {
             em.getTransaction().rollback();
@@ -173,11 +175,13 @@ public class Insercao {
         try {
             em.getTransaction().begin();
             demanda.aceitarDemanda();
-            em.remove(demanda);
             Projeto projeto = new Projeto();
             projeto.setContratante(demanda.getContratante());
             projeto.setProfissional(demanda.getProfissional());
             em.persist(projeto);
+            em.flush(); 
+            // apaga a demanda do banco usando sql
+            em.createNativeQuery("DELETE FROM Demanda WHERE id = " + demanda.getId()).executeUpdate();
             em.getTransaction().commit();
         } catch (Exception e) {
             em.getTransaction().rollback();
@@ -194,7 +198,9 @@ public class Insercao {
         try {
             em.getTransaction().begin();
             oferta.recusarOferta();
-            em.remove(oferta);
+            em.flush(); 
+            // apaga a oferta do banco usando sql
+            em.createNativeQuery("DELETE FROM Oferta WHERE id = " + oferta.getId()).executeUpdate();
             em.getTransaction().commit();
         } catch (Exception e) {
             em.getTransaction().rollback();
@@ -211,7 +217,9 @@ public class Insercao {
         try {
             em.getTransaction().begin();
             demanda.recusarDemanda();
-            em.remove(demanda);
+            em.flush(); 
+            // apaga a demanda do banco usando sql
+            em.createNativeQuery("DELETE FROM Demanda WHERE id = " + demanda.getId()).executeUpdate();
             em.getTransaction().commit();
         } catch (Exception e) {
             em.getTransaction().rollback();
@@ -228,7 +236,9 @@ public class Insercao {
         try {
             em.getTransaction().begin();
             oferta.cancelarOferta();
-            em.remove(oferta);
+            em.merge(oferta);
+            // apaga a oferta do banco usando sql
+            em.createNativeQuery("DELETE FROM Oferta WHERE id = " + oferta.getId()).executeUpdate();
             em.getTransaction().commit();
         } catch (Exception e) {
             em.getTransaction().rollback();
@@ -246,7 +256,8 @@ public class Insercao {
             em.getTransaction().begin();
             demanda.cancelarDemanda();
             em.merge(demanda);
-            em.remove(demanda);
+            // apaga a demanda do banco usando sql
+            em.createNativeQuery("DELETE FROM Demanda WHERE id = " + demanda.getId()).executeUpdate();
             em.getTransaction().commit();
         } catch (Exception e) {
             em.getTransaction().rollback();
@@ -262,7 +273,7 @@ public class Insercao {
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
-            em.persist(em.merge(projeto));
+            em.persist(em.merge(projeto)); 
             em.getTransaction().commit();
         } catch (Exception e) {
             em.getTransaction().rollback();
@@ -287,13 +298,13 @@ public class Insercao {
         }
     }
 
-    // metodo para cancelar um projeto
     public static void cancelarProjeto(Projeto projeto) {
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
+            projeto = em.merge(projeto);
             projeto.cancelarProjeto();
-            em.remove(projeto);
+            em.createNativeQuery("DELETE FROM Projeto WHERE id = " + projeto.getId()).executeUpdate();
             em.getTransaction().commit();
         } catch (Exception e) {
             em.getTransaction().rollback();
@@ -302,6 +313,7 @@ public class Insercao {
             em.close();
         }
     }
+    
 
     // metodo para criar um contrato
     public static void criarContrato(Contrato contrato) {
@@ -338,8 +350,9 @@ public class Insercao {
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
+            em.merge(contrato);
             contrato.cancelarContrato();
-            em.remove(contrato);
+            em.createNativeQuery("DELETE FROM Contrato WHERE id = " + contrato.getId()).executeUpdate();
             em.getTransaction().commit();
         } catch (Exception e) {
             em.getTransaction().rollback();

@@ -3,11 +3,16 @@ package com.maonamassa.visualsystem.insideframes.searchside.newdialogs;
 import java.awt.*;
 import javax.swing.*;
 
+import com.maonamassa.banco_de_dados.Insercao;
 import com.maonamassa.usersystem.Profissional;
+import com.maonamassa.visualsystem.firstinteraction.LoginScreen;
 
 public class PedirMaozinhaProfissional extends JDialog {
 
+    private Profissional profissional;
+
     public PedirMaozinhaProfissional(Profissional profissional) {
+        this.profissional = profissional;
         configurarJanela();
         configurarConteudoProfissional(profissional);
     }
@@ -96,6 +101,12 @@ public class PedirMaozinhaProfissional extends JDialog {
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
         JButton botaoEnviar = new JButton("Enviar Proposta");
+        botaoEnviar.addActionListener(e -> {
+            Insercao.cadastrarDemanda(profissional, LoginScreen.getSessao().getContratanteLogado(), textAreaProposta.getText());
+            dispose();
+            // mensagem de sucesso
+            JOptionPane.showMessageDialog(null, "Proposta enviada com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);     
+        });
 
         painelInferior.add(propostaLabel, BorderLayout.NORTH);
         painelInferior.add(scrollProposta, BorderLayout.CENTER);
