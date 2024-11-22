@@ -50,7 +50,7 @@ public class JanelaProjetos extends JDialog {
     // Função para adicionar os cartões de projetos ao painel
     private void adicionarCartoesProjetos(JPanel painelProjetos) {
         System.out.println("Adicionando cartões de projetos...");
-        int alturaCartao = 360;
+        int alturaCartao = 550;
 
         List<Projeto> projetos;
         if (LoginScreen.getSessao().getIsProfissional()) {

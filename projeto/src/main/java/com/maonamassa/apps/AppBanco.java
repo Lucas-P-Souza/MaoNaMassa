@@ -141,15 +141,15 @@ public class AppBanco {
                 }
 
                 for (int i = 0; i < 40; i++) {
-                        Demanda demanda = new Demanda(pedreiros.get(0), contratantesPedreiro.get(1),
-                                        "Demanda de Pedreiro para " + pedreiros.get(i).getName());
+                        Demanda demanda = new Demanda(pedreiros.get(0), contratantesPedreiro.get(i),
+                                        "Demanda de Pedreiro para " + pedreiros.get(0).getName());
                         demanda.setStatus(StatusOfertaDemanda.AGUARDANDO_ACEITACAO);
                         em.persist(demanda);
                 }
 
                 for (int i = 0; i < 40; i++) {
                         Demanda demanda = new Demanda(programadores.get(0), contratantesProgramador.get(i),
-                                        "Demanda de Programador para " + programadores.get(i).getName());
+                                        "Demanda de Programador para " + programadores.get(0).getName());
                         demanda.setStatus(StatusOfertaDemanda.AGUARDANDO_ACEITACAO);
                         em.persist(demanda);
                 }

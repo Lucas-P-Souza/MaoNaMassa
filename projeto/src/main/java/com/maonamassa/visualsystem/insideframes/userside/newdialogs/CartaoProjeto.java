@@ -1,14 +1,16 @@
 package com.maonamassa.visualsystem.insideframes.userside.newdialogs;
 
 import javax.swing.*;
-
 import com.maonamassa.banco_de_dados.Insercao;
 import com.maonamassa.contractsystem.Contrato;
+import com.maonamassa.contractsystem.LaTeXToPDFConverter;
 import com.maonamassa.projectsystem.Projeto;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class CartaoProjeto extends JPanel {
 
@@ -18,12 +20,19 @@ public class CartaoProjeto extends JPanel {
     private JTextField tfNomeProjeto;
     private JTextArea taDescricao;
     private JTextField tfValor;
+    private JTextField tfDataInicio;
+    private JTextField tfDataFim;
+
     private JButton btnGerarContrato;
     private JButton btnCancelarProjeto;
     private JButton btnAtualizarInformacoes;
     private JButton btnEntrar;
 
-    private JLabel descricaoLabel, valorLabel, contratanteLabel, profissionalLabel;
+    private JLabel descricaoLabel, valorLabel, contratanteLabel, profissionalLabel, dataInicioLabel, dataFimLabel,
+            nomeProjetoLabel;
+
+    // Formatter para o padrão brasileiro de datas
+    private static final DateTimeFormatter BR_DATE_FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     public CartaoProjeto(Projeto projeto) {
         if (projeto == null) {
@@ -32,187 +41,228 @@ public class CartaoProjeto extends JPanel {
         this.projeto = projeto;
         setLayout(null);
         setBorder(BorderFactory.createLineBorder(Color.BLACK)); // Borda para o cartão
-        setPreferredSize(new Dimension(500, 600));
+        setPreferredSize(new Dimension(500, 700));
         setBackground(Color.LIGHT_GRAY); // Cor de fundo para o cartão
 
         // Nome do Projeto: label
-        JLabel nomeProjetoLabel = new JLabel("Nome do Projeto:");
+        nomeProjetoLabel = new JLabel("Nome do Projeto: " + projeto.getNomeProjeto());
         nomeProjetoLabel.setFont(new Font("Arial", Font.BOLD, 12));
-        nomeProjetoLabel.setBounds(10, 10, 200, 20);
+        nomeProjetoLabel.setBounds(10, 10, 400, 20);
         add(nomeProjetoLabel);
 
-        // Campo para digitar o nome do projeto
-        tfNomeProjeto = new JTextField("Insira o nome do projeto");
+        // Campo para edição do nome do projeto
+        tfNomeProjeto = new JTextField(projeto.getNomeProjeto());
+        tfNomeProjeto.setFont(new Font("Arial", Font.PLAIN, 12));
         tfNomeProjeto.setBounds(10, 30, 400, 30);
-        tfNomeProjeto.setForeground(Color.GRAY); // Cor do texto placeholder
-        tfNomeProjeto.setEditable(false); // Inicialmente desabilitado
-        tfNomeProjeto.setVisible(false); // Inicialmente oculto
-        tfNomeProjeto.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (tfNomeProjeto.getText().equals("Insira o nome do projeto")) {
-                    tfNomeProjeto.setText("");
-                    tfNomeProjeto.setForeground(Color.BLACK);
-                }
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (tfNomeProjeto.getText().isEmpty()) {
-                    tfNomeProjeto.setText("Insira o nome do projeto");
-                    tfNomeProjeto.setForeground(Color.GRAY);
-                }
-            }
-        });
+        tfNomeProjeto.setVisible(false); // Apenas no modo de edição
         add(tfNomeProjeto);
 
-        // Nome do contratante (não editável)
+        // Nome do contratante
         contratanteLabel = new JLabel("Contratante: " + projeto.getContratante().getName());
         contratanteLabel.setFont(new Font("Arial", Font.PLAIN, 12));
         contratanteLabel.setBounds(10, 70, 400, 20);
-        contratanteLabel.setVisible(false); // Inicialmente oculto
         add(contratanteLabel);
 
-        // Nome do profissional (não editável)
+        // Nome do profissional
         profissionalLabel = new JLabel("Profissional: " + projeto.getProfissional().getName());
         profissionalLabel.setFont(new Font("Arial", Font.PLAIN, 12));
-        profissionalLabel.setBounds(10, 90, 400, 20);
-        profissionalLabel.setVisible(false); // Inicialmente oculto
+        profissionalLabel.setBounds(10, 100, 400, 20);
         add(profissionalLabel);
 
-        // Descrição do projeto: label
+        // Data de Início
+        dataInicioLabel = new JLabel("Data de Início: " + formatDate(projeto.getDataInicio()));
+        dataInicioLabel.setFont(new Font("Arial", Font.PLAIN, 12));
+        dataInicioLabel.setBounds(10, 130, 400, 20);
+        add(dataInicioLabel);
+
+        tfDataInicio = new JTextField(
+                projeto.getDataInicio() != null ? projeto.getDataInicio().format(BR_DATE_FORMAT) : "dd/mm/yyyy");
+        tfDataInicio.setFont(new Font("Arial", Font.PLAIN, 12));
+        tfDataInicio.setForeground(Color.GRAY);
+        tfDataInicio.setBounds(10, 150, 180, 30);
+        tfDataInicio.setVisible(false); // Apenas no modo de edição
+        tfDataInicio.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (tfDataInicio.getText().equals("dd/mm/yyyy")) {
+                    tfDataInicio.setText("");
+                    tfDataInicio.setForeground(Color.BLACK);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (tfDataInicio.getText().isEmpty()) {
+                    tfDataInicio.setText("dd/mm/yyyy");
+                    tfDataInicio.setForeground(Color.GRAY);
+                }
+            }
+        });
+        add(tfDataInicio);
+
+        // Data de Fim
+        dataFimLabel = new JLabel("Data de Fim: " + formatDate(projeto.getDataFim()));
+        dataFimLabel.setFont(new Font("Arial", Font.PLAIN, 12));
+        dataFimLabel.setBounds(10, 190, 400, 20);
+        add(dataFimLabel);
+
+        tfDataFim = new JTextField(
+                projeto.getDataFim() != null ? projeto.getDataFim().format(BR_DATE_FORMAT) : "dd/mm/yyyy");
+        tfDataFim.setFont(new Font("Arial", Font.PLAIN, 12));
+        tfDataFim.setForeground(Color.GRAY);
+        tfDataFim.setBounds(10, 210, 180, 30);
+        tfDataFim.setVisible(false); // Apenas no modo de edição
+        tfDataFim.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (tfDataFim.getText().equals("dd/mm/yyyy")) {
+                    tfDataFim.setText("");
+                    tfDataFim.setForeground(Color.BLACK);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (tfDataFim.getText().isEmpty()) {
+                    tfDataFim.setText("dd/mm/yyyy");
+                    tfDataFim.setForeground(Color.GRAY);
+                }
+            }
+        });
+        add(tfDataFim);
+
+        // Descrição
         descricaoLabel = new JLabel("Descrição:");
         descricaoLabel.setFont(new Font("Arial", Font.BOLD, 12));
-        descricaoLabel.setBounds(10, 120, 200, 20);
-        descricaoLabel.setVisible(false); // Inicialmente oculto
+        descricaoLabel.setBounds(10, 250, 200, 20);
         add(descricaoLabel);
 
-        // Campo de descrição
-        taDescricao = new JTextArea("Insira a descrição do projeto");
+        taDescricao = new JTextArea(projeto.getDescricaoProjeto());
         taDescricao.setFont(new Font("Arial", Font.PLAIN, 12));
-        taDescricao.setEditable(false);
+        taDescricao.setEditable(false); // Não editável inicialmente
+        taDescricao.setBackground(getBackground()); // Remover a caixa branca
+        taDescricao.setBounds(10, 270, 400, 100);
         taDescricao.setWrapStyleWord(true);
         taDescricao.setLineWrap(true);
-        taDescricao.setBounds(10, 140, 400, 100);
-        taDescricao.setForeground(Color.GRAY);
-        taDescricao.setVisible(false); // Inicialmente oculto
-        taDescricao.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (taDescricao.getText().equals("Insira a descrição do projeto")) {
-                    taDescricao.setText("");
-                    taDescricao.setForeground(Color.BLACK);
-                }
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (taDescricao.getText().isEmpty()) {
-                    taDescricao.setText("Insira a descrição do projeto");
-                    taDescricao.setForeground(Color.GRAY);
-                }
-            }
-        });
+        taDescricao.setForeground(Color.BLACK);
         add(taDescricao);
 
-        // Campo de valor
+        // Valor
         valorLabel = new JLabel("Valor:");
         valorLabel.setFont(new Font("Arial", Font.BOLD, 12));
-        valorLabel.setBounds(10, 250, 400, 20);
-        valorLabel.setVisible(false); // Inicialmente oculto
+        valorLabel.setBounds(10, 380, 400, 20);
         add(valorLabel);
 
-        tfValor = new JTextField("Insira o valor do projeto");
+        tfValor = new JTextField(projeto.getValorCombinado());
         tfValor.setFont(new Font("Arial", Font.PLAIN, 12));
-        tfValor.setForeground(Color.GRAY); // Placeholder
-        tfValor.setBounds(10, 270, 180, 30);
-        tfValor.setEditable(false); // Inicialmente desabilitado
-        tfValor.setVisible(false); // Inicialmente oculto
-        tfValor.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (tfValor.getText().equals("Insira o valor do projeto")) {
-                    tfValor.setText("");
-                    tfValor.setForeground(Color.BLACK);
-                }
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (tfValor.getText().isEmpty()) {
-                    tfValor.setText("Insira o valor do projeto");
-                    tfValor.setForeground(Color.GRAY);
-                }
-            }
-        });
+        tfValor.setForeground(Color.GRAY);
+        tfValor.setBounds(10, 400, 180, 30);
+        tfValor.setEditable(false); // Não editável inicialmente
+        tfValor.setBackground(getBackground()); // Remover a caixa branca
         add(tfValor);
+
+        // Botão Cancelar
+        btnCancelarProjeto = new JButton("Cancelar");
+        btnCancelarProjeto.setBounds(200, 500, 180, 30);
+        btnCancelarProjeto.addActionListener((ActionEvent e) -> cancelarProjeto());
+        add(btnCancelarProjeto);
 
         // Botão Entrar
         btnEntrar = new JButton("Entrar");
-        btnEntrar.setBounds(10, 310, 180, 30);
-        btnEntrar.addActionListener((ActionEvent e) -> {
-            toggleEditMode();
-        });
+        btnEntrar.setBounds(10, 450, 180, 30);
+        btnEntrar.addActionListener((ActionEvent e) -> toggleEditMode());
         add(btnEntrar);
 
         // Botão Atualizar Informações
         btnAtualizarInformacoes = new JButton("Atualizar Informações");
-        btnAtualizarInformacoes.setBounds(200, 270, 180, 30);
-        btnAtualizarInformacoes.setVisible(false); // Inicialmente oculto
-        btnAtualizarInformacoes.addActionListener((ActionEvent e) -> {
-            // Atualiza as informações do projeto
-            projeto.setNomeProjeto(tfNomeProjeto.getText());
-            projeto.setDescricaoProjeto(taDescricao.getText());
-            projeto.setValorCombinado(tfValor.getText());
-            Insercao.atualizarProjeto(projeto);
-            JOptionPane.showMessageDialog(this, "Informações atualizadas com sucesso!");
-        });
+        btnAtualizarInformacoes.setBounds(200, 450, 180, 30);
+        btnAtualizarInformacoes.setVisible(false); // Inicialmente invisível
+        btnAtualizarInformacoes.addActionListener((ActionEvent e) -> atualizarInformacoes());
         add(btnAtualizarInformacoes);
 
         // Botão Gerar Contrato
-        btnGerarContrato = new JButton("Iniciar Projeto / Gerar Contrato");
-        btnGerarContrato.setBounds(10, 310, 180, 30);
-        btnGerarContrato.setVisible(false); // Inicialmente oculto
+        btnGerarContrato = new JButton("Gerar Contrato");
+        btnGerarContrato.setBounds(10, 500, 180, 30);
         btnGerarContrato.addActionListener((ActionEvent e) -> {
-            Contrato contrato = new Contrato(projeto);
-            Insercao.criarContrato(contrato);
-            JOptionPane.showMessageDialog(this, "Contrato gerado com sucesso!");
+            if (validarCamposPreenchidos()) {
+                Contrato contrato = new Contrato(projeto);
+                Insercao.criarContrato(contrato);
+                LaTeXToPDFConverter converter = new LaTeXToPDFConverter();
+                converter.convertToPDF(contrato);
+                JOptionPane.showMessageDialog(this, "Contrato gerado com sucesso!");
+                bloquearEdicao();
+            } else {
+                JOptionPane.showMessageDialog(this, "Preencha todos os campos antes de gerar o contrato.");
+            }
         });
         add(btnGerarContrato);
-
-        // Botão Cancelar Projeto
-        btnCancelarProjeto = new JButton("Cancelar Projeto");
-        btnCancelarProjeto.setBounds(200, 310, 180, 30);
-        btnCancelarProjeto.setVisible(false); // Inicialmente oculto
-        btnCancelarProjeto.addActionListener((ActionEvent e) -> {
-            Insercao.cancelarProjeto(projeto);
-            JOptionPane.showMessageDialog(this, "Projeto cancelado com sucesso!");
-        });
-        add(btnCancelarProjeto);
     }
 
     private void toggleEditMode() {
         editMode = !editMode;
 
-        // Alterna a visibilidade e habilitação dos campos
-        tfNomeProjeto.setEditable(editMode);
         tfNomeProjeto.setVisible(editMode);
-
-        contratanteLabel.setVisible(editMode);
-        profissionalLabel.setVisible(editMode);
-
-        descricaoLabel.setVisible(editMode);
+        tfDataInicio.setVisible(editMode);
+        tfDataFim.setVisible(editMode);
         taDescricao.setEditable(editMode);
-        taDescricao.setVisible(editMode);
-
-        valorLabel.setVisible(editMode);
         tfValor.setEditable(editMode);
-        tfValor.setVisible(editMode);
 
+        // Agora a caixa de texto de descrição e valor aparecem quando Entrar for clicado
+        taDescricao.setBackground(Color.WHITE);
+        tfValor.setBackground(Color.WHITE);
+
+        btnEntrar.setVisible(!editMode);
         btnAtualizarInformacoes.setVisible(editMode);
-        btnGerarContrato.setVisible(editMode);
-        btnCancelarProjeto.setVisible(editMode);
+    }
 
-        btnEntrar.setVisible(!editMode); // Botão "Entrar" desaparece no modo de edição
+    private void atualizarInformacoes() {
+        try {
+            // Atualizar o nome do projeto e a descrição normalmente
+            projeto.setNomeProjeto(tfNomeProjeto.getText());
+            projeto.setDescricaoProjeto(taDescricao.getText());
+
+            // Atualizar o valor do projeto, se o campo não estiver vazio
+            if (!tfValor.getText().isEmpty()) {
+                projeto.setValorCombinado(tfValor.getText());
+            }
+
+            // Atualizar a data de início apenas se o campo tiver sido modificado
+            if (!tfDataInicio.getText().equals("dd/mm/yyyy") && !tfDataInicio.getText().isEmpty()) {
+                projeto.setDataInicio(LocalDate.parse(tfDataInicio.getText(), BR_DATE_FORMAT));
+            }
+
+            // Atualizar a data de fim apenas se o campo tiver sido modificado
+            if (!tfDataFim.getText().equals("dd/mm/yyyy") && !tfDataFim.getText().isEmpty()) {
+                projeto.setDataFim(LocalDate.parse(tfDataFim.getText(), BR_DATE_FORMAT));
+            }
+
+            // Atualizar o projeto no banco de dados
+            Insercao.atualizarProjeto(projeto);
+            JOptionPane.showMessageDialog(this, "Informações atualizadas com sucesso!");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Erro ao atualizar as informações: " + ex.getMessage());
+        }
+    }
+
+    private boolean validarCamposPreenchidos() {
+        return !tfNomeProjeto.getText().isEmpty() && !taDescricao.getText().isEmpty() && !tfValor.getText().isEmpty()
+                && !tfDataInicio.getText().equals("dd/mm/yyyy") && !tfDataFim.getText().equals("dd/mm/yyyy");
+    }
+
+    private void bloquearEdicao() {
+        tfNomeProjeto.setEditable(false);
+        taDescricao.setEditable(false);
+        tfValor.setEditable(false);
+        tfDataInicio.setEditable(false);
+        tfDataFim.setEditable(false);
+    }
+
+    private void cancelarProjeto() {
+        Insercao.cancelarProjeto(projeto);
+        JOptionPane.showMessageDialog(this, "Projeto cancelado.");
+    }
+
+    private String formatDate(LocalDate date) {
+        return date != null ? date.format(BR_DATE_FORMAT) : "N/A";
     }
 }

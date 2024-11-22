@@ -298,6 +298,7 @@ public class Insercao {
         }
     }
 
+    // metodo para cancelar um projeto
     public static void cancelarProjeto(Projeto projeto) {
         EntityManager em = emf.createEntityManager();
         try {
