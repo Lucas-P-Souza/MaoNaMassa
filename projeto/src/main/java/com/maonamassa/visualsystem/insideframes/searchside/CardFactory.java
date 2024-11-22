@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import com.maonamassa.usersystem.Contratante;
 import com.maonamassa.usersystem.Profissional;
+import com.maonamassa.visualsystem.insideframes.searchside.newdialogs.OferecerMaozinhaContratante;
 import com.maonamassa.visualsystem.insideframes.searchside.newdialogs.PedirMaozinhaProfissional;
 
 public class CardFactory {
@@ -49,8 +50,8 @@ public class CardFactory {
         }
 
         pedirMaozinhaButton.addActionListener(e -> {
-            System.out.println("Abrindo a janela 'Pedir uma mãozinha' para " + contratante.getName());
-            PedirMaozinhaProfissional pedirMaozinhaDialog = new PedirMaozinhaProfissional(contratante);
+            System.out.println("Abrindo a janela 'Oferecer uma mãozinha' para " + contratante.getName());
+            OferecerMaozinhaContratante pedirMaozinhaDialog = new OferecerMaozinhaContratante(contratante);
             pedirMaozinhaDialog.setVisible(true);
         });
 

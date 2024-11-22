@@ -3,35 +3,32 @@ package com.maonamassa.visualsystem.insideframes.searchside.newdialogs;
 import java.awt.*;
 import javax.swing.*;
 
-import com.maonamassa.usersystem.Profissional;
+import com.maonamassa.usersystem.Contratante;
 
-public class PedirMaozinhaProfissional extends JDialog {
+public class OferecerMaozinhaContratante extends JDialog {
 
-    public PedirMaozinhaProfissional(Profissional profissional) {
+    public OferecerMaozinhaContratante(Contratante contratante) {
         configurarJanela();
-        configurarConteudoProfissional(profissional);
+        configurarConteudoContratante(contratante);
     }
 
     private void configurarJanela() {
         setTitle("Pedir uma mãozinha");
-        setSize(500, 400); // Define o tamanho da janela
+        setSize(500, 450); // Aumentei o tamanho da janela para acomodar o campo de valor
         setLocationRelativeTo(null); // Centraliza a janela na tela
         setModal(true); // Bloqueia a interação com a janela principal enquanto esta estiver aberta
     }
 
-    private void configurarConteudoProfissional(Profissional profissional) {
+    private void configurarConteudoContratante(Contratante contratante) {
         JPanel painelPrincipal = criarPainelPrincipal();
 
-        // Painel superior com foto e informações do profissional
+        // Painel superior com foto e informações do contratante
         JPanel painelSuperior = criarPainelSuperior(
-                profissional != null ? profissional.getName() : "Não disponível",
-                "Profissão: " + (profissional != null ? profissional.getProfissao() : "Não disponível"),
-                "Cidade: " + (profissional != null && profissional.getAddress() != null ? profissional.getAddress()
-                        : "Não informado"),
-                "Disponibilidade: " + (profissional != null && profissional.getDisponibilidade() != null
-                        && profissional.getDisponibilidade().getDescricao() != null
-                                ? profissional.getDisponibilidade().getDescricao()
-                                : "Não informado"));
+                contratante != null ? contratante.getName() : "Não disponível",
+                "Descrição: " + (contratante != null ? contratante.getDescricao() : "Não disponível"),
+                "Buscando: " + (contratante != null ? contratante.getBuscando() : "Não informado"),
+                null // Nenhuma informação adicional
+        );
 
         JPanel painelInferior = criarPainelInferior();
 
@@ -87,6 +84,7 @@ public class PedirMaozinhaProfissional extends JDialog {
         JPanel painelInferior = new JPanel();
         painelInferior.setLayout(new BorderLayout(10, 10));
 
+        // Seção para escrever a proposta
         JLabel propostaLabel = new JLabel("Escreva sua proposta:");
         JTextArea textAreaProposta = new JTextArea(5, 30);
         textAreaProposta.setLineWrap(true);
@@ -95,11 +93,24 @@ public class PedirMaozinhaProfissional extends JDialog {
         JScrollPane scrollProposta = new JScrollPane(textAreaProposta, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
+        // Seção para digitar o valor do serviço
+        JLabel valorLabel = new JLabel("Valor do serviço proposto:");
+        JTextField campoValor = new JTextField(20); // Campo de texto para o valor
+
+        // Botão para enviar a proposta
         JButton botaoEnviar = new JButton("Enviar Proposta");
 
+        // Painel para o campo de valor e o botão
+        JPanel painelValorEEnviar = new JPanel();
+        painelValorEEnviar.setLayout(new BorderLayout(5, 5));
+        painelValorEEnviar.add(valorLabel, BorderLayout.NORTH);
+        painelValorEEnviar.add(campoValor, BorderLayout.CENTER);
+        painelValorEEnviar.add(botaoEnviar, BorderLayout.SOUTH);
+
+        // Adiciona os componentes ao painel inferior
         painelInferior.add(propostaLabel, BorderLayout.NORTH);
         painelInferior.add(scrollProposta, BorderLayout.CENTER);
-        painelInferior.add(botaoEnviar, BorderLayout.SOUTH);
+        painelInferior.add(painelValorEEnviar, BorderLayout.SOUTH);
 
         return painelInferior;
     }
@@ -112,9 +123,10 @@ public class PedirMaozinhaProfissional extends JDialog {
 
     public static void main(String[] args) {
         // Simulação de dados para teste
-        Profissional profissional = new Profissional("João da Silva", "Engenheiro", "São Paulo", "Disponível");
+        // Contratante contratante = new Contratante("Maria Oliveira", "Preciso de um
+        // encanador", "Consertar vazamentos");
 
-        // Testando o construtor para Profissional
-        new PedirMaozinhaProfissional(profissional).setVisible(true);
+        // Testando o construtor para Contratante
+        // new PedirMaozinhaContratante(contratante).setVisible(true);
     }
 }
