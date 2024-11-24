@@ -25,14 +25,13 @@ public class Oferta
 
     public Oferta() {}
 
-    public Oferta(Profissional profissional, Contratante contratante, String descricao, String valor,
-    		      StatusOfertaDemanda status)
+    public Oferta(Profissional profissional, Contratante contratante, String descricao, String valor)
     {
         this.profissional = profissional;
         this.contratante = contratante;
         this.descricao = descricao;
         this.valor = valor;
-        this.status = status;
+        this.status = StatusOfertaDemanda.AGUARDANDO_ACEITACAO;
     }
 
     public Profissional getProfissional() {return profissional;}
@@ -52,6 +51,7 @@ public class Oferta
     
     public void aceitarOferta() {this.status = StatusOfertaDemanda.PROPOSTA_ACEITA;}
     public void recusarOferta() {this.status = StatusOfertaDemanda.PROPOSTA_REJEITADA;}
+    public void cancelarOferta() {this.status = StatusOfertaDemanda.PROPOSTA_CANCELADA;}
 
 	public Long getId() {return id;}
-}
+    }

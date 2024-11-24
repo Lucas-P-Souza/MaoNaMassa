@@ -3,7 +3,6 @@ package com.maonamassa.contractsystem;
 import javax.persistence.*;
 import java.time.LocalDate;
 import com.maonamassa.projectsystem.Projeto;
-import com.maonamassa.projectsystem.TipoDoProjeto;
 
 @Entity
 public class Contrato 
@@ -35,26 +34,14 @@ public class Contrato
     public Contrato(Projeto projeto) 
     {
         this.projeto = projeto;
-        if (projeto.getTipoProjeto() == TipoDoProjeto.OFERTA_DE_SERVICO) 
-        {
-            this.nomeContratante = projeto.getOferta().getContratante().getName();
-            this.cpfCnpjContratante = projeto.getOferta().getContratante().getCpfcnpj();
-            this.enderecoContratante = projeto.getOferta().getContratante().getAddress();
-            this.nomeProfissional = projeto.getOferta().getProfissional().getName();
-            this.cpfCnpjProfissional = projeto.getOferta().getProfissional().getCpfcnpj();
-            this.enderecoProfissional = projeto.getOferta().getProfissional().getAddress();
-        } 
-        else if (projeto.getTipoProjeto() == TipoDoProjeto.DEMANDA_DE_SERVICO) 
-        {
-            this.nomeContratante = projeto.getDemanda().getContratante().getName();
-            this.cpfCnpjContratante = projeto.getDemanda().getContratante().getCpfcnpj();
-            this.enderecoContratante = projeto.getDemanda().getContratante().getAddress();
-            this.nomeProfissional = projeto.getDemanda().getProfissional().getName();
-            this.cpfCnpjProfissional = projeto.getDemanda().getProfissional().getCpfcnpj();
-            this.enderecoProfissional = projeto.getDemanda().getProfissional().getAddress(); 
-        }
+        this.nomeContratante = projeto.getContratante().getName();
+        this.cpfCnpjContratante = projeto.getContratante().getCpfcnpj();
+        this.enderecoContratante = projeto.getContratante().getAddress();
+        this.nomeProfissional = projeto.getProfissional().getName();
+        this.cpfCnpjProfissional = projeto.getProfissional().getCpfcnpj();
+        this.enderecoProfissional = projeto.getProfissional().getAddress();
         this.descricaoDetalhada = projeto.getDescricaoProjeto();
-        this.valorCombinado = projeto.getValorCombinado().toString();
+        this.valorCombinado = projeto.getValorCombinado();
         this.dataInicio = projeto.getDataInicio();
         this.dataFim = projeto.getDataFim();
         this.setStatusAssinatura(StatusAssinaturas.AGUARDANDO_ASSINATURAS);

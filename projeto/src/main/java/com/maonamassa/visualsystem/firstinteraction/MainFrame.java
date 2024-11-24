@@ -5,14 +5,14 @@ import java.awt.CardLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
-import com.maonamassa.visualsystem.profileandsearch.FirstScreen;
-import com.maonamassa.visualsystem.profileandsearch.InsideScreen;
+import com.maonamassa.visualsystem.insideframes.InsideScreen;
 
 public class MainFrame extends JFrame {
     
     private CardLayout cardLayout;
 
     public MainFrame() {
+
         setTitle("Nome do App");
         setSize(1500, 750);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -29,7 +29,7 @@ public class MainFrame extends JFrame {
         add(new FirstScreen(this), "FirstScreen");
         add(new RegisterScreen(this), "RegisterScreen");
         add(new LoginScreen(this), "LoginScreen");
-        add(new InsideScreen(this, true), "InsideScreen");  // Tela interna após login
+        add(new InsideScreen(this), "InsideScreen");
 
         // Exibe a primeira tela
         cardLayout.show(getContentPane(), "FirstScreen");
@@ -44,8 +44,36 @@ public class MainFrame extends JFrame {
 
     // Método para trocar telas
     public void showScreen(String screenName) {
-        cardLayout.show(getContentPane(), screenName);
+        System.out.println("Chamando showScreen para: " + screenName);
+        getContentPane().removeAll();
+    
+        switch (screenName) {
+            case "LoginScreen":
+                System.out.println("Exibindo LoginScreen");
+                add(new LoginScreen(this));
+                break;
+            case "RegisterScreen":
+                System.out.println("Exibindo RegisterScreen");
+                add(new RegisterScreen(this));
+                break;
+            case "InsideScreen":
+                System.out.println("Exibindo InsideScreen");
+                add(new InsideScreen(this));
+                break;
+            case "FirstScreen":
+                System.out.println("Exibindo FirstScreen");
+                add(new FirstScreen(this));
+                break;
+            default:
+                System.out.println("Tela desconhecida. Exibindo LoginScreen por padrão.");
+                add(new LoginScreen(this));
+                break;
+        }
+    
+        revalidate();
+        repaint();
     }
+    
 
     // Alterna entre modo janela e tela cheia
     private void toggleFullScreen() {

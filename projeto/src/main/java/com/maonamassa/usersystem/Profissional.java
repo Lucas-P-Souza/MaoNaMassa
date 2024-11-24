@@ -7,7 +7,8 @@ public class Profissional extends User
 {
 
     private String areaAtuacao;
-    private String disponibilidade;
+    private Disponibilidade disponibilidade;
+    private String profissao;
 
     public Profissional() {}
 
@@ -18,6 +19,10 @@ public class Profissional extends User
     public String getAreaAtuacao() {return areaAtuacao;}
     public void setAreaAtuacao(String areaAtuacao) {this.areaAtuacao = areaAtuacao;}
 
-    public String getDisponibilidade() {return disponibilidade;}
-    public void setDisponibilidade(String disponibilidade) {this.disponibilidade = disponibilidade;}
+    public Disponibilidade getDisponibilidade() {return disponibilidade;}
+    public void setDisponibilidade(Disponibilidade disponibilidade) {this.disponibilidade = disponibilidade;}
+
+    public String getProfissao() {return profissao;}
+    public void setProfissao(String profissao) {this.profissao = profissao;}
+
 }
